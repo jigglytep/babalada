@@ -1,0 +1,2 @@
+# babalada
+Project Stock Simulator
