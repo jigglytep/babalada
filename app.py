@@ -1,27 +1,12 @@
-import re
-from datetime import datetime
-from flask import jsonify
-from flask import Flask
 
-app = Flask(__name__)
+# from flask import Flask
 
-
-@app.route("/")
-def home():
-    return "Hello, Flask!"
+# from auth.main import main as main_blueprint
+# from auth.auth import auth as auth_blueprint
 
 
-@app.route("/test/")
-def hello_there():
-    now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X")
-
-    # Filter the name argument to letters only using regular expressions. URL arguments
-    # can contain arbitrary text, so we restrict to safe characters only.
-    # match_object = re.match("[a-zA-Z]+", name)
-
-    clean_name = "Friend"
-
-    content = "Hello there, " + clean_name + "! It's " + formatted_now
-    dict = {'content': content, 'time': now}
-    return jsonify(dict)
+# app = Flask(__name__)
+# app.register_blueprint(main_blueprint)
+# app.register_blueprint(auth_blueprint)
+# app.config['SECRET_KEY'] = 'secret-key-goes-here'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
