@@ -19,10 +19,13 @@ https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-yo
 
 # Steps to set up local environment
 
-export FLASK_APP=auth
-export PG_PASSWD=<PASSWORD>
-export PG_USR=<USERNAME>
-export PG_URL=<URL>
+    FLASK_APP=auth
+
+    PG_PASSWD=<PASSWORD>
+
+    PG_USR=<USERNAME>
+
+    PG_URL=<URL>
 
 # Run app locally
 
