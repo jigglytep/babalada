@@ -29,4 +29,4 @@ https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-yo
 
 # Run app locally
 
-flask run
+    flask run
