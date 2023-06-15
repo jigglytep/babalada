@@ -13,7 +13,6 @@ This is a website built with [SvelteKit], [Typescript], & [Sass] to compile a ht
 * [Install Python 3].
 * Clone this repository to your computer.
 * Run `pnpm i` to install UI dependencies.
-* Run `pip install python-packages.txt -r` to install server dependencies.
 
 ### Development Scripts
 To run a script, type `pnpm run <script-name>` in a terminal within the root folder.
@@ -30,6 +29,7 @@ To run a script, type `pnpm run <script-name>` in a terminal within the root fol
 * Install Dependencies.
 * Run `python -m venv venv`
 * Run `source venv/bin/activate`
+* Run `pip install -r python-packages.txt` to install server dependencies.
 * TODO
 
 ### Build App
