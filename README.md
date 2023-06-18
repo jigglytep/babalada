@@ -11,7 +11,7 @@ This is a website built with [SvelteKit], [Typescript], & [Sass] to compile a ht
 The website UI depends upon a [Python 3] server running on an [Ubuntu] machine to perform ORM for a [Postgres] database. Server dependencies are managed by [Pip]. The UI communicates with the server through REST endpoints. The server and database are to be hosted by [AWS].
 
 ### Install UI
-* [Install PNPM].
+* [Install PNPM] and ensure it's accessible by PATH.
 * Open a terminal in the root directory of this repository.
 * Run `pnpm i` in the terminal to install UI dependencies.
 
@@ -31,7 +31,7 @@ To run a script, type `pnpm run <script-name>` in a terminal within the root fol
 ### Deploy UI
 This app is set up to use [Fly.io] to deploy a Docker container. To deploy with Fly:
 * Install UI.
-* [Install flyctl].
+* [Install flyctl] and ensure it's accessible by PATH.
 * Run `pnpm run build` to build the app files.
 * Run `flyctl deploy` or `flyctl launch` to deploy the app files.
 
@@ -39,7 +39,7 @@ From here, you can access the server remotely via SSH by running `flyctl ssh con
 
 ### Install Server
 * You must be running a Linux Ubuntu machine or equivalent to install the server locally.
-* [Install Python 3].
+* [Install Python 3] and ensure it's accessible by PATH.
 * Open a terminal in the root directory of this repository.
 * Run `python -m venv venv` to create the virtual environment.
 * Run `source venv/bin/activate` to activate the virtual environment.
