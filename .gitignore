@@ -1,3 +1,18 @@
+### UI ###
+.DS_Store
+node_modules
+pnpm-lock.yaml
+package-lock.json
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+### SERVER ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

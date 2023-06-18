@@ -1,32 +1,82 @@
-# babalada
+Babalada
+===
+A stock investment simulator
+---
+Developed between June 7, 2023 and July 24, 2023.
 
-Project Stock Simulator
+Babalada uses data from the real stock market to provide a realistic trading environment with risk management tools, a social platform (forum), and performance evaluation metrics to help users assess and improve their stock trading skills.
 
-Login Tutorial for refrence
-https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
+This is a website built with [SvelteKit], [Typescript], & [Sass] to compile a html/css/js application delivered by a [Node] server. [Docker] is used to deploy the UI server within a minified [Ubuntu] environment. UI dependencies are managed by [PNPM]. The Docker container is to be hosted by [Fly] at https://www.babalada.com.
 
-# creates virtual environment
+The website UI depends upon a [Python 3] server running on an [Ubuntu] machine to perform ORM for a [Postgres] database. Server dependencies are managed by [Pip]. The UI communicates with the server through REST endpoints. The server and database are to be hosted by [AWS].
 
-    python -m venv venv
+### Install UI
+* [Install PNPM] and ensure it's accessible by PATH.
+* Open a terminal in the root directory of this repository.
+* Run `pnpm i` in the terminal to install UI dependencies.
 
-# activate environment
+From here, you can run, develop, and deploy the UI side of the project.
 
-    source venv/bin/activate
+### Run UI Scripts
+To run a script, type `pnpm run <script-name>` in a terminal within the root folder.
 
-# install requred packages
+| script-name | description |
+|:----------- |:----------- |
+| `dev` | create a local hot-reloading server at [localhost:5173](http://localhost:5173) for development purposes |
+| `build` | compile a production version of the app into the build folder |
+| `preview` | create a local server which serves the contents of the build folder at [localhost:4173](http://localhost:4173) |
+| `check` | evaluate Svelte syntax |
+| `check:watch` | re-evaluate Svelte syntax when files are updated |
 
-    pip install requirements.txt
+### Deploy UI
+This app is set up to use [Fly.io] to deploy a Docker container. To deploy with Fly:
+* Install UI.
+* [Install flyctl] and ensure it's accessible by PATH.
+* Run `pnpm run build` to build the app files.
+* Run `flyctl deploy` or `flyctl launch` to deploy the app files.
 
-# Steps to set up local environment
+From here, you can access the server remotely via SSH by running `flyctl ssh console`.
 
-    FLASK_APP=auth
+### Install Server
+* You must be running a Linux Ubuntu machine or equivalent to install the server locally.
+* [Install Python 3] and ensure it's accessible by PATH.
+* Open a terminal in the root directory of this repository.
+* Run `python -m venv venv` to create the virtual environment.
+* Run `source venv/bin/activate` to activate the virtual environment.
+* Run `pip install -r python-packages.txt` in the terminal to install server dependencies within your virtual environment.
+* Run the following to create environment variables:
+```
+export FLASK_APP=server
+export PG_PASSWD=<PASSWORD>
+export PG_USR=<USERNAME>
+export PG_URL=<URL>
+```
 
-    PG_PASSWD=<PASSWORD>
+From here, you can run, develop, and deploy the server side of the project.
 
-    PG_USR=<USERNAME>
+### Run Server Scripts
+* Run `flask run` to run the app locally.
+* TODO: Lev
 
-    PG_URL=<URL>
+### Deploy Server
+* TODO: Lev
 
-# Run app locally
+[SvelteKit]: https://kit.svelte.dev/docs/introduction
+[Typescript]: https://www.typescriptlang.org/why-create-typescript
+[Sass]: https://sass-lang.com/guide
+[Node]: https://nodejs.org/en/docs/guides/
+[Docker]: https://docs.docker.com/get-started/overview/
+[Ubuntu]: https://ubuntu.com/about
+[PNPM]: https://pnpm.io/motivation
+[Install PNPM]: https://pnpm.io/installation
+[Python 3]: https://www.python.org/
+[Install Python 3]: https://www.python.org/downloads/
+[Pip]: https://pypi.org/project/pip/
+[Postgres]: https://www.postgresql.org/about/
+[Fly]: https://fly.io/docs/
+[Install flyctl]: https://fly.io/docs/hands-on/install-flyctl/
+[AWS]: https://aws.amazon.com/
 
-    flask run
+# TODO: remove the following notes
+
+Login Tutorial for refrence: https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
