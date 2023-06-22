@@ -2,6 +2,8 @@
 # SOURCE: https://github.com/BretFisher/nodejs-rocks-in-docker
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
+RUN apt-get update && apt-get install -y python3-pip
+# COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
 COPY --from=node /usr/local/bin/ /usr/local/bin/
@@ -27,8 +29,17 @@ RUN pnpm install -r --offline --prod
 # copy app files
 COPY --chown=node:server build build
 COPY --chown=node:server package.json ./
+COPY server server
+COPY requirements.txt .
+COPY start_servers.sh .
+
 # start server
 ENV HOST 0.0.0.0
 ENV PORT 8080
 EXPOSE 8080
-ENTRYPOINT ["/usr/local/bin/node", "./build"]
+
+EXPOSE 5000
+RUN pip3 install -r /app/requirements.txt
+ENV FLASK_APP=server
+
+CMD ["/app/start_servers.sh"]

@@ -4,3 +4,6 @@
 !/build
 !/pnpm-lock.yaml
 !/package.json
+!/server
+!/requirements.txt
+!/start_servers.sh
