@@ -1,8 +1,11 @@
 import type { PageServerLoad } from './$types.js';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const response = await fetch('http://localhost:5000/api/');
-	return {
-		response
-	};
+	let s = fetch("http://0.0.0.0:5000/api/")
+    .then((response) => response.json())
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+	return {s};
 }
