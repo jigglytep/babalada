@@ -26,20 +26,18 @@ RUN curl https://get.pnpm.io/install.sh | env PNPM_VERSION=8.6.2 sh -
 COPY --chown=node:server pnpm-lock.yaml ./
 RUN pnpm fetch --prod
 RUN pnpm install -r --offline --prod
+COPY requirements.txt ./
+RUN pip3 install -r /app/requirements.txt
 # copy app files
 COPY --chown=node:server build build
 COPY --chown=node:server package.json ./
 COPY server server
-COPY requirements.txt .
-COPY start_servers.sh .
+COPY start_servers.sh ./
 
-# start server
+# start servers
 ENV HOST 0.0.0.0
 ENV PORT 8080
 EXPOSE 8080
-
-EXPOSE 5000
-RUN pip3 install -r /app/requirements.txt
 ENV FLASK_APP=server
-
+EXPOSE 5000
 CMD ["/app/start_servers.sh"]
