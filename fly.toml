@@ -15,3 +15,7 @@ primary_region = "den"
 
 [[services]]
 	internal_port = 5000
+	protocol = "tcp"
+	[[services.ports]]
+		handlers = ['tls', 'http']
+		port = 5000
