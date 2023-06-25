@@ -5,5 +5,5 @@
 </script>
 
 <h1>Babalada</h1>
-<p>Aa Home</p>
+<p>Aa</p>
 <p>{data.response.json().toString()}</p>

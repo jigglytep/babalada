@@ -8,7 +8,7 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"deploy": "pnpm run build && flyctl deploy www-babalada-com"
+		"deploy": "pnpm run build && flyctl deploy -a www-babalada-com"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^1.2.4",
