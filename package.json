@@ -3,9 +3,11 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev:ui": "vite dev",
+		"dev:api": "echo 'TODO: implement cross-platform local API server'",
 		"build": "vite build",
 		"preview": "vite preview",
+		"deploy": "bash docker_deploy.sh",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},

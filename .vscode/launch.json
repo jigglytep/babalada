@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "auth",
+                "FLASK_APP": "server",
                 "FLASK_DEBUG": "1"
             },
             "args": [

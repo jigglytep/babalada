@@ -15,29 +15,10 @@ The website UI depends upon a [Python 3] server running on an [Ubuntu] machine t
 * Open a terminal in the root directory of this repository.
 * Run `pnpm i` in the terminal to install UI dependencies.
 
-From here, you can run, develop, and deploy the UI side of the project.
-
-### Run UI Scripts
-To run a script, type `pnpm run <script-name>` in a terminal within the root folder.
-
-| script-name | description |
-|:----------- |:----------- |
-| `dev` | create a local hot-reloading server at [localhost:5173](http://localhost:5173) for development purposes |
-| `build` | compile a production version of the app into the build folder |
-| `preview` | create a local server which serves the contents of the build folder at [localhost:4173](http://localhost:4173) |
-| `check` | evaluate Svelte syntax |
-| `check:watch` | re-evaluate Svelte syntax when files are updated |
-
-### Deploy UI
-This app is set up to use [Fly.io] to deploy a Docker container. To deploy with Fly:
-* Install UI.
-* [Install flyctl] and ensure it's accessible by PATH.
-* Run `pnpm run build` to build the app files.
-* Run `flyctl deploy` or `flyctl launch` to deploy the app files.
-
-From here, you can access the server remotely via SSH by running `flyctl ssh console`.
+From here, you can run and develop the UI side of the project.
 
 ### Install Server
+* TODO: update this
 * You must be running a Linux Ubuntu machine or equivalent to install the server locally.
 * [Install Python 3] and ensure it's accessible by PATH.
 * Open a terminal in the root directory of this repository.
@@ -47,19 +28,34 @@ From here, you can access the server remotely via SSH by running `flyctl ssh con
 * Run the following to create environment variables:
 ```
 export FLASK_APP=server
-export PG_PASSWD=<PASSWORD>
-export PG_USR=<USERNAME>
-export PG_URL=<URL>
+export PG_PASSWD=<.env_value>
+export PG_USR=<.env_value>
+export PG_URL=<.env_value>
 ```
 
-From here, you can run, develop, and deploy the server side of the project.
+From here, you can run and develop the server side of the project.
 
-### Run Server Scripts
-* Run `flask run` to run the app locally.
-* TODO: Lev
+### Run Scripts
+To run a script, type `pnpm run <script-name>` in a terminal within the root folder.
 
-### Deploy Server
-* TODO: Lev
+| script-name | description |
+|:----------- |:----------- |
+| `dev:ui` | create a local hot-reloading server at [localhost:5173](http://localhost:5173) for UI development |
+| `dev:api` | create a local server at [localhost:5000](http://localhost:5000) for API development |
+| `build` | compile a production version of the app UI server into the build folder |
+| `preview` | create a local server which serves the contents of the build folder at [localhost:4173](http://localhost:4173) |
+| `deploy` | run `build` and deploy the UI & API servers to the website |
+| `check` | evaluate Svelte syntax |
+| `check:watch` | re-evaluate Svelte syntax when files are updated |
+
+### Deploy App
+This app is set up to use [Fly.io] to deploy a Docker container. To deploy with Fly:
+* Install UI.
+* [Install flyctl] and ensure it's accessible by PATH.
+* Create or update `.env` file with secrets variables.
+* Run `pnpm run deploy` to deploy the UI & Server.
+
+From here, you can access the server remotely via SSH by running `flyctl ssh console`.
 
 [SvelteKit]: https://kit.svelte.dev/docs/introduction
 [Typescript]: https://www.typescriptlang.org/why-create-typescript
@@ -76,7 +72,3 @@ From here, you can run, develop, and deploy the server side of the project.
 [Fly]: https://fly.io/docs/
 [Install flyctl]: https://fly.io/docs/hands-on/install-flyctl/
 [AWS]: https://aws.amazon.com/
-
-# TODO: remove the following notes
-
-Login Tutorial for refrence: https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
