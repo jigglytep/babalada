@@ -11,9 +11,9 @@ COPY --from=node /usr/local/bin/ /usr/local/bin/
 RUN corepack disable && corepack enable
 # create server group & node user, then create app directory
 RUN groupadd --gid 1000 server \
-    && useradd --uid 1000 --gid server --shell /bin/bash --create-home node \
-    && mkdir /app \
-    && chown -R node:server /app
+	&& useradd --uid 1000 --gid server --shell /bin/bash --create-home node \
+	&& mkdir /app \
+	&& chown -R node:server /app
 
 # create prod environment
 FROM base AS prod
