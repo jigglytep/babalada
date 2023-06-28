@@ -20,6 +20,7 @@
 		margin: 6px 0 6px 0;
 	}
 	.icon-home {
+		text-decoration: none;
 	}
 	ul {
 		display: flex;
@@ -35,8 +36,10 @@
 				text-decoration: none;
 			}
 			&:hover {
+				background-color: lightgray;
 			}
 			&:active {
+				background-color: gray;
 			}
 		}
 	}
