@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# check dependencies are installed
+pnpm i
+
 # build UI
 pnpm run build
 
