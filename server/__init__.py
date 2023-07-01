@@ -1,8 +1,12 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-import os
 from flask_cors import CORS
+import os
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
+from flask import Flask
+from dotenv import load_dotenv
+load_dotenv()
+# from .models import User
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
@@ -38,3 +42,6 @@ def create_app():
     app.register_blueprint(api_blueprint)
 
     return app
+
+
+app = create_app()
