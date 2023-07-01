@@ -21,16 +21,15 @@ FROM base AS prod
 WORKDIR /app
 USER node
 # install pnpm
-RUN curl https://get.pnpm.io/install.sh | env PNPM_VERSION=8.6.2 sh -
+RUN curl https://get.pnpm.io/install.sh | sh -
 # install app dependencies
-COPY --chown=node:server pnpm-lock.yaml ./
-RUN pnpm fetch --prod
-RUN pnpm install -r --offline --prod
+COPY pnpm-lock.yaml package.json ./
+RUN pnpm install --prod
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
 # copy app files
-COPY --chown=node:server build build
-COPY --chown=node:server package.json ./
+COPY build build
+COPY package.json ./
 COPY server server
 COPY start_servers.sh ./
 

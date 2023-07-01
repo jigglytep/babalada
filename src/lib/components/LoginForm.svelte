@@ -14,14 +14,14 @@
 	</div>
 	
 	{#if !doSignUp}
-		<form method="dialog" class="login">
+		<form method="dialog" class="login" autocomplete="on">
 			<input type="text" name="email" placeholder="Email Address" required>
 			<input type="password" name="password" placeholder="Password" required>
 			<a href="#">Forgot password?</a>
 			<input type="submit" value="Login">
 		</form>
 	{:else}
-		<form method="dialog" class="signup">
+		<form method="dialog" class="signup" autocomplete="off">
 			<input type="text" name="email" placeholder="Email Address" required>
 			<input type="password" name="password" placeholder="Password" required>
 			<input type="password" name="password-confirm" placeholder="Confirm Password" required>
