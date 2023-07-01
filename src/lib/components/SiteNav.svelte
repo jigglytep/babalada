@@ -20,6 +20,14 @@
 		margin: 6px 0 6px 0;
 	}
 	.icon-home {
+		text-decoration: none;
+		color: black;
+		&:hover {
+			background-color: lightgray;
+		}
+		&:active {
+			background-color: gray;
+		}
 	}
 	ul {
 		display: flex;
@@ -30,13 +38,14 @@
 			padding: 6px 10px;
 			border: 2px solid black;
 			border-radius: 8px;
+			color: black;
+			background-color: inherit;
 			text-decoration: none;
-			&:visited {
-				text-decoration: none;
-			}
 			&:hover {
+				background-color: lightgray;
 			}
 			&:active {
+				background-color: gray;
 			}
 		}
 	}
