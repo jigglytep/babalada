@@ -10,52 +10,49 @@ This is a website built with [SvelteKit], [Typescript], & [Sass] to compile a ht
 
 The website UI depends upon a [Python 3] server running on an [Ubuntu] machine to perform ORM for a [Postgres] database. Server dependencies are managed by [Pip]. The UI communicates with the server through REST endpoints. The server and database are to be hosted by [AWS].
 
-### Install UI
+### Install Dev Dependencies
 * [Install PNPM] and ensure it's accessible by PATH.
+* [Install Docker] and ensure it's accessible by PATH.
 * Open a terminal in the root directory of this repository.
 * Run `pnpm i` in the terminal to install UI dependencies.
 
-From here, you can run and develop the UI side of the project.
-
-### Install Server
-* TODO: update this
-* You must be running a Linux Ubuntu machine or equivalent to install the server locally.
-* [Install Python 3] and ensure it's accessible by PATH.
-* Open a terminal in the root directory of this repository.
-* Run `python -m venv venv` to create the virtual environment.
-* Run `source venv/bin/activate` to activate the virtual environment.
-* Run `pip install -r python-packages.txt` in the terminal to install server dependencies within your virtual environment.
-* Run the following to create environment variables:
-```
-export FLASK_APP=server
-export PG_PASSWD=<.env_value>
-export PG_USR=<.env_value>
-export PG_URL=<.env_value>
-```
-
-From here, you can run and develop the server side of the project.
+From here, you can run, develop, and deploy the project.
 
 ### Run Scripts
 To run a script, type `pnpm run <script-name>` in a terminal within the root folder.
 
 | script-name | description |
 |:----------- |:----------- |
-| `dev:ui` | create a local hot-reloading server at [localhost:5173](http://localhost:5173) for UI development |
-| `dev:api` | create a local server at [localhost:5000](http://localhost:5000) for API development |
-| `build` | compile a production version of the app UI server into the build folder |
-| `preview` | create a local server which serves the contents of the build folder at [localhost:4173](http://localhost:4173) |
-| `deploy` | run `build` and deploy the UI & API servers to the website |
+| `ui` | create a local hot-reloading server at [localhost:5173](http://localhost:5173) for UI development |
+| `api` | create a local server at [localhost:5000](http://localhost:5000) for API development |
+| `build` | compile a production version of the UI server into the build folder |
+| `preview` | create a local docker container to serve the UI server and API server - run `build` first |
+| `deploy` | deploy the UI & API servers with flyctl |
 | `check` | evaluate Svelte syntax |
 | `check:watch` | re-evaluate Svelte syntax when files are updated |
 
 ### Deploy App
 This app is set up to use [Fly.io] to deploy a Docker container. To deploy with Fly:
-* Install UI.
 * [Install flyctl] and ensure it's accessible by PATH.
-* Create or update `.env` file with secrets variables.
+* Create or update `.env` file with necessary secrets variables.
 * Run `pnpm run deploy` to deploy the UI & Server.
 
 From here, you can access the server remotely via SSH by running `flyctl ssh console`.
+
+### Run API Without Docker
+* You must be operating on an Ubuntu machine or equivalent.
+* [Install Python 3] and ensure it's accessible by PATH.
+* Open a terminal in the root directory of this repository.
+* Run `python -m venv venv` to create the virtual environment.
+* Run `source venv/bin/activate` to activate the virtual environment.
+* Run `pip install -r requirements.txt` in the terminal to install server dependencies within your virtual environment.
+* Run the following to create environment variables:
+```
+export FLASK_APP=server
+export PG_PASSWD=<.env>
+export PG_USR=<.env>
+export PG_URL=<.env>
+```
 
 [SvelteKit]: https://kit.svelte.dev/docs/introduction
 [Typescript]: https://www.typescriptlang.org/why-create-typescript
@@ -67,6 +64,7 @@ From here, you can access the server remotely via SSH by running `flyctl ssh con
 [Install PNPM]: https://pnpm.io/installation
 [Python 3]: https://www.python.org/
 [Install Python 3]: https://www.python.org/downloads/
+[Install Docker]: https://docs.docker.com/engine/install/
 [Pip]: https://pypi.org/project/pip/
 [Postgres]: https://www.postgresql.org/about/
 [Fly]: https://fly.io/docs/
