@@ -13,4 +13,20 @@
 	<LoginForm />
 </Modal>
 
-<style lang="scss"></style>
+<style lang="scss">
+	button {
+		display: block;
+		padding: 6px 10px;
+		border: 2px solid black;
+		border-radius: 8px;
+		font-size: 1rem;
+		color: black;
+		background-color: inherit;
+		&:hover {
+			background-color: lightgray;
+		}
+		&:active {
+			background-color: gray;
+		}
+	}
+</style>

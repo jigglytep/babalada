@@ -11,10 +11,10 @@
 	on:close={() => doShowModal=false}
 	on:click|self={() => dialogHTML.close()}
 >
-	<div on:click|stopPropagation>
+	<div class="modal-container" on:click|stopPropagation>
 		<!-- svelte-ignore a11y-autofocus -->
 		<button autofocus on:click={() => dialogHTML.close()}>
-			<iconify-icon icon="lucide:x"/>
+			<iconify-icon icon="ph:x-circle-thin"/>
 		</button>
 		<slot />
 	</div>
@@ -23,14 +23,17 @@
 <style lang="scss">
 	dialog {
 		margin: auto;
-		border-radius: 0.2em;
+		margin-top: 8rem;
+		border-radius: 0.4em;
 		border: none;
-		> div {
-			padding: 1em;
+		button {
+			float: right;
+			display: flex;
+			margin: 0.2rem;
+			border: none;
+			font-size: 2rem;
+			background-color: inherit;
 		}
-	}
-	button {
-		display: block;
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.4);
