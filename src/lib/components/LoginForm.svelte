@@ -19,7 +19,8 @@
 				redirect: 'follow',
 			}
 		);
-		console.log(JSON.stringify(await response.json()));
+		const responseJSON = await response.json();
+		console.log(JSON.stringify(responseJSON));
 		// TODO: implement update of AccountStore from response
 	}
 	const submitSignup = async (e: SubmitEvent) => {}
