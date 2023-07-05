@@ -9,8 +9,8 @@
 
 	const submitLogin = async () => {
 		let formData = new FormData();
-    formData.append("email", loginEmail);
-    formData.append("password", loginPassword);
+    formData.append('email', loginEmail);
+    formData.append('password', loginPassword);
 		const request: RequestInit = {
 			method: 'POST',
 			body: formData,
@@ -37,16 +37,16 @@
 	
 	{#if !doSignUp}
 		<form method="dialog" class="login" autocomplete="on">
-			<input type="text" name="email" placeholder="Email Address" required/>
-			<input type="password" name="password" placeholder="Password" required/>
+			<input type="text" name="email" placeholder="Email Address" required bind:value={loginEmail}/>
+			<input type="password" name="password" placeholder="Password" required bind:value={loginPassword}/>
 			<a href="#">Forgot password?</a>
 			<input type="submit" value="Login" on:click={submitLogin}/>
 		</form>
 	{:else}
 		<form method="dialog" class="signup" autocomplete="off">
-			<input type="text" name="email" placeholder="Email Address" required/>
-			<input type="password" name="password" placeholder="Password" required/>
-			<input type="password" name="password-confirm" placeholder="Confirm Password"/>
+			<input type="text" name="email" placeholder="Email Address" required bind:value={signupEmail}/>
+			<input type="password" name="password" placeholder="Password" required bind:value={signupPassword}/>
+			<input type="password" name="password-confirm" placeholder="Confirm Password" required bind:value={signupPasswordConfirm}/>
 			<input type="submit" value="Signup" on:click={submitSignup}/>
 		</form>
 	{/if}

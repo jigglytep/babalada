@@ -11,6 +11,8 @@ export const POST: ServerLoad = async ({ params, request }) => {
 		method: request.method,
 		body: request.body,
 		redirect: request.redirect,
+		// @ts-ignore
+		duplex: 'half'
 	});
 	console.log('REQUEST:')
 	console.log(request);
