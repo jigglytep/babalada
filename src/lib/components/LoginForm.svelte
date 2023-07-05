@@ -3,11 +3,6 @@
 
 	let loginFormHTML: HTMLFormElement;
 	let signupFormHTML: HTMLFormElement;
-	let loginEmail: string = '';
-	let loginPassword: string = '';
-	let signupEmail: string = '';
-	let signupPassword: string = '';
-	let signupPasswordConfirm: string = '';
 
 	const submitLogin = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -39,16 +34,16 @@
 	
 	{#if !doSignUp}
 		<form method="POST" action="/api/login" class="login" autocomplete="on" on:submit={submitLogin} bind:this={loginFormHTML}>
-			<input type="text" name="email" placeholder="Email Address" required bind:value={loginEmail}/>
-			<input type="password" name="password" placeholder="Password" required bind:value={loginPassword}/>
+			<input type="text" name="email" placeholder="Email Address" required/>
+			<input type="password" name="password" placeholder="Password" required/>
 			<a href="#">Forgot password?</a>
 			<input type="submit" value="Login"/>
 		</form>
 	{:else}
 		<form method="POST" action="/api/signup" class="signup" autocomplete="off" on:submit={submitSignup} bind:this={signupFormHTML}>
-			<input type="text" name="email" placeholder="Email Address" required bind:value={signupEmail}/>
-			<input type="password" name="password" placeholder="Password" required bind:value={signupPassword}/>
-			<input type="password" name="password-confirm" placeholder="Confirm Password" required bind:value={signupPasswordConfirm}/>
+			<input type="text" name="email" placeholder="Email Address" required/>
+			<input type="password" name="password" placeholder="Password" required/>
+			<input type="password" name="password-confirm" placeholder="Confirm Password" required/>
 			<input type="submit" value="Signup"/>
 		</form>
 	{/if}
