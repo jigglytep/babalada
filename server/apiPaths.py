@@ -39,22 +39,22 @@ def login():
     # }
     if not auth or not auth.get('email') or not auth.get('password'):
         # returns 401 if any email or / and password is missing
-        return make_response(
+        return make_response(jsonify(
             'Could not verify',
             401,
             {'WWW-Authenticate': 'Basic realm ="Login required !!"'}
-        )
+        ))
 
     user = User.query\
         .filter_by(email=auth.get('email'))\
         .first()
     if not user:
         # returns 401 if user does not exist
-        return make_response(
+        return make_response(jsonify(
             'Could not verify',
             401,
             {'WWW-Authenticate': 'Basic realm ="User does not exist !!"'}
-        )
+				))
 
     if check_password_hash(user.password, auth.get('password')):
         # generates the JWT Token
@@ -62,11 +62,11 @@ def login():
 
         return make_response(jsonify({'token': token}), 201)
     # returns 403 if password is wrong
-    return make_response(
+    return make_response(jsonify(
         'Could not verify',
         403,
         {'WWW-Authenticate': 'Basic realm ="Wrong Password !!"'}
-    )
+		))
 
 
 @api.route('/api/signup', methods=['POST'])
@@ -105,4 +105,4 @@ def signup():
 
         return make_response(jsonify({'token': token}), 201)
     else:
-        return make_response('User already exists. Please Log in.', 202)
+        return make_response(jsonify('User already exists. Please Log in.', 202))

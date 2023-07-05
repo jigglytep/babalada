@@ -1,5 +1,29 @@
 <script lang="ts">
 	let doSignUp = false;
+
+	let loginFormHTML: HTMLFormElement;
+	let signupFormHTML: HTMLFormElement;
+	let loginEmail: string = '';
+	let loginPassword: string = '';
+	let signupEmail: string = '';
+	let signupPassword: string = '';
+	let signupPasswordConfirm: string = '';
+
+	const submitLogin = async (e: SubmitEvent) => {
+		e.preventDefault();
+		const response = await fetch(
+			loginFormHTML.action,
+			{
+				method: loginFormHTML.method,
+				body: new FormData(loginFormHTML),
+				redirect: 'follow',
+			}
+		);
+		const responseJSON = await response.json();
+		console.log(JSON.stringify(responseJSON));
+		// TODO: implement update of AccountStore from response
+	}
+	const submitSignup = async (e: SubmitEvent) => {}
 </script>
 
 <div class="login-form-container">
@@ -14,18 +38,18 @@
 	</div>
 	
 	{#if !doSignUp}
-		<form method="dialog" class="login" autocomplete="on">
-			<input type="text" name="email" placeholder="Email Address" required>
-			<input type="password" name="password" placeholder="Password" required>
+		<form method="POST" action="/api/login" class="login" autocomplete="on" on:submit={submitLogin} bind:this={loginFormHTML}>
+			<input type="text" name="email" placeholder="Email Address" required bind:value={loginEmail}/>
+			<input type="password" name="password" placeholder="Password" required bind:value={loginPassword}/>
 			<a href="#">Forgot password?</a>
-			<input type="submit" value="Login">
+			<input type="submit" value="Login"/>
 		</form>
 	{:else}
-		<form method="dialog" class="signup" autocomplete="off">
-			<input type="text" name="email" placeholder="Email Address" required>
-			<input type="password" name="password" placeholder="Password" required>
-			<input type="password" name="password-confirm" placeholder="Confirm Password" required>
-			<input type="submit" value="Signup">
+		<form method="POST" action="/api/signup" class="signup" autocomplete="off" on:submit={submitSignup} bind:this={signupFormHTML}>
+			<input type="text" name="email" placeholder="Email Address" required bind:value={signupEmail}/>
+			<input type="password" name="password" placeholder="Password" required bind:value={signupPassword}/>
+			<input type="password" name="password-confirm" placeholder="Confirm Password" required bind:value={signupPasswordConfirm}/>
+			<input type="submit" value="Signup"/>
 		</form>
 	{/if}
 </div>
