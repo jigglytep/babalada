@@ -23,7 +23,7 @@
 <style lang="scss">
 	dialog {
 		margin: auto;
-		margin-top: 8rem;
+		margin-top: 6rem;
 		border-radius: 0.4em;
 		border: none;
 		button {
