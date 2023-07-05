@@ -7,15 +7,16 @@ export const GET: ServerLoad = async ({ params, request }) => {
 
 export const POST: ServerLoad = async ({ params, request }) => {
 	let url = `http://127.0.0.1:5000/api/${params.slug}`;
-	let response = await fetch(url, {
+	let newRequest = {
 		method: request.method,
 		body: request.body,
 		redirect: request.redirect,
 		// @ts-ignore
-		duplex: 'half'
-	});
+		duplex: 'half',
+	}
+	let response = await fetch(url, newRequest);
 	console.log('REQUEST:')
-	console.log(request);
+	console.log(newRequest);
 	console.log('RESPONSE:')
 	console.log(response)
 	console.log('URL:')

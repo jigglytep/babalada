@@ -1,28 +1,28 @@
 <script lang="ts">
 	let doSignUp = false;
 
-	let loginEmail: string;
-	let loginPassword: string;
-	let signupEmail: string;
-	let signupPassword: string;
-	let signupPasswordConfirm: string;
+	let loginFormHTML: HTMLFormElement;
+	let signupFormHTML: HTMLFormElement;
+	let loginEmail: string = '';
+	let loginPassword: string = '';
+	let signupEmail: string = '';
+	let signupPassword: string = '';
+	let signupPasswordConfirm: string = '';
 
-	const submitLogin = async () => {
-		let formData = new FormData();
-    formData.append('email', loginEmail);
-    formData.append('password', loginPassword);
-		const request: RequestInit = {
-			method: 'POST',
-			body: formData,
-			redirect: 'follow',
-		}
-		const response = await fetch('/api/login', request);
-		console.log(request);
+	const submitLogin = async (e: SubmitEvent) => {
+		e.preventDefault();
+		const response = await fetch(
+			loginFormHTML.action,
+			{
+				method: loginFormHTML.method,
+				body: new FormData(loginFormHTML),
+				redirect: 'follow',
+			}
+		);
+		// TODO: implement update of AccountStore from response
 		console.log(response);
-		// TODO: implement update of AccountStore from response
-		// TODO: implement update of AccountStore from response
 	}
-	const submitSignup = async () => {}
+	const submitSignup = async (e: SubmitEvent) => {}
 </script>
 
 <div class="login-form-container">
@@ -37,18 +37,18 @@
 	</div>
 	
 	{#if !doSignUp}
-		<form class="login" autocomplete="on">
+		<form method="POST" action="/api/login" class="login" autocomplete="on" on:submit={submitLogin} bind:this={loginFormHTML}>
 			<input type="text" name="email" placeholder="Email Address" required bind:value={loginEmail}/>
 			<input type="password" name="password" placeholder="Password" required bind:value={loginPassword}/>
 			<a href="#">Forgot password?</a>
-			<input type="submit" value="Login" on:click={submitLogin}/>
+			<input type="submit" value="Login"/>
 		</form>
 	{:else}
-		<form class="signup" autocomplete="off">
+		<form method="POST" action="/api/signup" class="signup" autocomplete="off" on:submit={submitSignup} bind:this={signupFormHTML}>
 			<input type="text" name="email" placeholder="Email Address" required bind:value={signupEmail}/>
 			<input type="password" name="password" placeholder="Password" required bind:value={signupPassword}/>
 			<input type="password" name="password-confirm" placeholder="Confirm Password" required bind:value={signupPasswordConfirm}/>
-			<input type="submit" value="Signup" on:click={submitSignup}/>
+			<input type="submit" value="Signup"/>
 		</form>
 	{/if}
 </div>
