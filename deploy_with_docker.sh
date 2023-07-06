@@ -6,13 +6,17 @@ pnpm i
 # build UI
 pnpm run build
 
-# gather env secrets for fly
-env_vars=("$@")
+# gather env secrets for flyctl and docker
+docker_env_vars=("$@")
+flyctl_env_vars=("$@")
 while IFS= read -r input_line || [[ -n "$input_line" ]]; do
 	input_line=$(echo $input_line)
-	env_vars+=" --build-secret $input_line"
+	docker_env_vars+="--build-secret $input_line "
+	flyctl_env_vars+="$input_line "
 done < .env
-echo "${env_vars[@]}"
 
-# deploy app with env secrets passed to Docker
-flyctl deploy -a www-babalada-com ${env_vars[@]}
+# set flyctl env secrets
+flyctl secrets set --stage ${flyctl_env_vars[@]}
+
+# deploy app with env secrets passed through flyctl to docker
+flyctl deploy -a www-babalada-com ${docker_env_vars[@]}
