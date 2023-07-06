@@ -4,3 +4,4 @@ flask-login
 psycopg2-binary
 flask-cors
 pyjwt
+python-dotenv
