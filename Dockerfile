@@ -25,7 +25,8 @@ COPY pnpm-lock.yaml package.json ./
 
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | sh -
-
+RUN export PNPM_HOME="~/.local/share/pnpm"
+RUN export PATH="$PNPM_HOME:$PATH"
 # install app dependencies
 RUN pnpm i
 # build UI
