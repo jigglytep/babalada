@@ -23,10 +23,10 @@ FROM base AS prod
 WORKDIR /app
 USER node
 RUN npm i -g pnpm
-# COPY pnpm-lock.yaml package.json ./4
+COPY pnpm-lock.yaml package.json ./
 
 # install pnpm
-RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
+# RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
 # install app dependencies
 RUN pnpm i
