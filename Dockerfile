@@ -23,7 +23,6 @@ USER node
 
 # install app dependencies
 RUN pnpm i
-
 # build UI
 RUN pnpm run build
 

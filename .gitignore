@@ -163,8 +163,8 @@ cython_debug/
 ### UI ###
 .DS_Store
 node_modules
-pnpm-lock.yaml
-package-lock.json
+# pnpm-lock.yaml
+# package-lock.json
 /build
 /.svelte-kit
 /package
