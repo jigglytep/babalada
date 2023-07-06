@@ -22,8 +22,8 @@ FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
 USER node
-
-COPY pnpm-lock.yaml package.json ./
+RUN npm i -g pnpm
+# COPY pnpm-lock.yaml package.json ./4
 
 # install pnpm
 RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
