@@ -2,7 +2,8 @@
 # SOURCE: https://github.com/BretFisher/nodejs-rocks-in-docker
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
-RUN apt-get update && apt-get install -y python3-pip nodejs
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
+RUN apt-get update && apt-get install -y tzdata python3-pip nodejs
 # COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
