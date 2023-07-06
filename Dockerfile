@@ -22,7 +22,13 @@ WORKDIR /app
 USER node
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | sh -
+
 # install app dependencies
+RUN pnpm i
+
+# build UI
+RUN pnpm run build
+
 COPY pnpm-lock.yaml package.json ./
 RUN pnpm install --prod
 COPY requirements.txt ./
