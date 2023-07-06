@@ -2,7 +2,7 @@
 # SOURCE: https://github.com/BretFisher/nodejs-rocks-in-docker
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
-RUN apt-get update && apt-get install -y python3-pip
+RUN apt-get update && apt-get install -y python3-pip curl
 # COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/

@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 from flask import Flask
 from dotenv import load_dotenv
-# load_dotenv()
+load_dotenv()
 # from .models import User
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
