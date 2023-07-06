@@ -37,7 +37,15 @@ def login():
     #     'email': 'a@a.com',
     #     'password': '123'
     # }
-    if not auth or not auth.get('email') or not auth.get('password'):
+    if not auth:
+        # returns 
+        return make_response(jsonify(
+            'Could not verify',
+            401,
+            {'WWW-Authenticate': 'Basic realm ="Form required !!"'}
+				))
+
+    if not auth.get('email') or not auth.get('password'):
         # returns 401 if any email or / and password is missing
         return make_response(jsonify(
             'Could not verify',
