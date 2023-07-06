@@ -2,6 +2,8 @@
 # SOURCE: https://github.com/BretFisher/nodejs-rocks-in-docker
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install -y tzdata
+
 RUN apt-get update && apt-get install -y python3-pip npm
 # COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
@@ -21,7 +23,8 @@ FROM base AS prod
 WORKDIR /app
 USER node
 # install pnpm
-RUN curl https://get.pnpm.io/install.sh | sh -
+RUN npm i pnpm
+# RUN curl https://get.pnpm.io/install.sh | sh -
 # install app dependencies
 COPY pnpm-lock.yaml package.json ./
 RUN pnpm install --prod
