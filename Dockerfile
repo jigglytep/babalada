@@ -20,6 +20,7 @@ FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
 USER node
+COPY pnpm-lock.yaml package.json ./
 
 # install app dependencies
 RUN pnpm i
@@ -28,7 +29,6 @@ RUN pnpm run build
 
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | sh -
-COPY pnpm-lock.yaml package.json ./
 RUN pnpm install --prod
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
