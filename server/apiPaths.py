@@ -54,7 +54,7 @@ def login():
             'Could not verify',
             401,
             {'WWW-Authenticate': 'Basic realm ="User does not exist !!"'}
-				))
+        ))
 
     if check_password_hash(user.password, auth.get('password')):
         # generates the JWT Token
