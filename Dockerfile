@@ -2,10 +2,7 @@
 # SOURCE: https://github.com/BretFisher/nodejs-rocks-in-docker
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install -y tzdata
-
-RUN apt-get install -y tzdata python3-pip npm
-RUN npm i -g pnpm
+RUN apt-get update && apt-get install -y python3-pip npm
 # COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
@@ -23,21 +20,13 @@ FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
 USER node
-
-COPY pnpm-lock.yaml package.json ./
-
 # install pnpm
-# RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
-
+RUN curl https://get.pnpm.io/install.sh | sh -
 # install app dependencies
-RUN pnpm install --prod
-
-# build UI
-RUN pnpm run build
+COPY pnpm-lock.yaml package.json ./
 RUN pnpm install --prod
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
-
 # copy app files
 COPY build build
 COPY package.json ./
