@@ -20,6 +20,7 @@ FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
 USER node
+
 COPY pnpm-lock.yaml package.json ./
 
 # install app dependencies
