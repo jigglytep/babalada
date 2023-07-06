@@ -15,4 +15,4 @@ done < .env
 echo "${env_vars[@]}"
 
 # deploy app with env secrets passed to Docker
-flyctl deploy -a www-babalada-com ${env_vars[@]}
+# flyctl deploy -a www-babalada-com ${env_vars[@]}

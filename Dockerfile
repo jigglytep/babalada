@@ -23,18 +23,21 @@ FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
 USER node
+
 COPY pnpm-lock.yaml package.json ./
 
 # install pnpm
 # RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
 # install app dependencies
-RUN pnpm i
+RUN pnpm install --prod
+
 # build UI
 RUN pnpm run build
 RUN pnpm install --prod
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
+
 # copy app files
 COPY build build
 COPY package.json ./
