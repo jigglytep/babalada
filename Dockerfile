@@ -5,6 +5,7 @@ FROM ubuntu:focal-20230412 AS base
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install -y tzdata
 
 RUN apt-get install -y tzdata python3-pip npm
+RUN npm i -g pnpm
 # COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
@@ -22,7 +23,6 @@ FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
 USER node
-RUN npm i -g pnpm
 COPY pnpm-lock.yaml package.json ./
 
 # install pnpm
