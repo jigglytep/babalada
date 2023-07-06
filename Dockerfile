@@ -23,7 +23,7 @@ FROM base AS prod
 WORKDIR /app
 USER node
 # install pnpm
-RUN npm i pnpm
+RUN npm i -g pnpm
 # RUN curl https://get.pnpm.io/install.sh | sh -
 # install app dependencies
 COPY pnpm-lock.yaml package.json ./
