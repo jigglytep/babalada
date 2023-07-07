@@ -21,8 +21,9 @@
   <div id="picturePlaceholder"></div>
   <div id="userInfo">
     <h1>{name}</h1>
+    <p>Username: @JohnSmtih1</p>
     <br />
-    <h4>{bio}</h4>
+    <h4>Bio: "{bio}""</h4>
     <br />
     <p>Babalada User since {currentYear}</p>
   </div>
@@ -92,11 +93,11 @@
 
   .port {
     width: auto;
-    height: 5em;
+    height: auto;
     background-color: grey;
     border-radius: 15px;
     margin-bottom: 1em;
     color: white;
-    padding-left: 1em;
+    padding: 1em;
   }
 </style>
