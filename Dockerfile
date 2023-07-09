@@ -5,8 +5,6 @@ FROM ubuntu:focal-20230412 AS base
 RUN apt-get update && apt-get install -y python3-pip curl
 COPY . /app
 RUN curl https://get.pnpm.io/install.sh | sh -
-RUN pnpm i
-RUN pnpm run build
 
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
@@ -23,8 +21,10 @@ RUN groupadd --gid 1000 server \
 FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
-# USER node
-COPY pnpm-lock.yaml package.json ./
+USER node
+# COPY pnpm-lock.yaml package.json ./
+RUN pnpm i
+RUN pnpm run build
 
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
@@ -35,6 +35,7 @@ COPY server server
 COPY start_servers.sh ./
 
 # start servers
+ENG ORIGIN=http://localhost:3000 node build/index.js
 ENV HOST 0.0.0.0
 ENV PORT 8080
 EXPOSE 8080
