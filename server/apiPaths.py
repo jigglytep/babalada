@@ -29,14 +29,14 @@ def api_profile(current_user):
 
 @api.route('/api/login', methods=['POST'])
 def login():
-
-    auth = request.form
+    json_str = request.data.decode('utf-8')
+    # auth = request.form
 
     # debug
-    # auth = {
-    #     'email': 'a@a.com',
-    #     'password': '123'
-    # }
+    auth = {
+        'email': json_str.split('\n')[3].strip(),
+        'password': json_str.split('\n')[7].strip()
+    }
     if not auth or not auth.get('email') or not auth.get('password'):
         # returns 401 if any email or / and password is missing
         return make_response(jsonify(
@@ -54,7 +54,7 @@ def login():
             'Could not verify',
             401,
             {'WWW-Authenticate': 'Basic realm ="User does not exist !!"'}
-				))
+        ))
 
     if check_password_hash(user.password, auth.get('password')):
         # generates the JWT Token
@@ -66,7 +66,7 @@ def login():
         'Could not verify',
         403,
         {'WWW-Authenticate': 'Basic realm ="Wrong Password !!"'}
-		))
+    ))
 
 
 @api.route('/api/signup', methods=['POST'])

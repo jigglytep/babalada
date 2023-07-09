@@ -9,7 +9,22 @@
   console.log(data);
 </script>
 
-<h1>Babalada</h1>
-<p>Aa Home</p>
-<p>data.s.home: {data.s.home}</p>
-<p>data.s.status: {data.s.status}</p>
+<div id="main-container">
+  <h1>Welcome to Babalada!</h1>
+  <div id="secondary-container">
+  </div>
+</div>
+
+<style>
+  #main-container {
+    width: 90%;
+    margin: auto;
+    padding-top: 1em;
+  }
+
+  #secondary-container {
+    width: 95%;
+    margin: auto;
+  }
+
+</style>
