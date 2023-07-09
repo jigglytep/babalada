@@ -19,7 +19,7 @@ RUN groupadd --gid 1000 server \
 FROM base AS prod
 # move to app directory as user node
 WORKDIR /app
-USER node
+# USER node
 COPY pnpm-lock.yaml package.json ./
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
