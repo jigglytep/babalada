@@ -24,7 +24,7 @@ USER node
 # RUN curl https://get.pnpm.io/install.sh | sh -
 # install app dependencies
 COPY pnpm-lock.yaml package.json ./
-RUN pnpm install --prod
+# RUN pnpm install --prod
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
 # copy app files
