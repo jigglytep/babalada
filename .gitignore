@@ -174,3 +174,6 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 !src/lib
+.gitignore
+id_rsa_do.pub
+id_rsa_do

@@ -3,7 +3,11 @@
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
 RUN apt-get update && apt-get install -y python3-pip curl
-# COPY . /app
+COPY . /app
+RUN curl https://get.pnpm.io/install.sh | sh -
+RUN pnpm i
+RUN pnpm run build
+
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
 COPY --from=node /usr/local/bin/ /usr/local/bin/
@@ -21,6 +25,7 @@ FROM base AS prod
 WORKDIR /app
 # USER node
 COPY pnpm-lock.yaml package.json ./
+
 COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
 # copy app files
