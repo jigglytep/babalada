@@ -12,8 +12,12 @@ def getData():
     # if everything went all right, return json data
     if (respoce.status_code == 200):
         data= json.loads(respoce.text)
+        # if the user enters a incorrect/non exsistent stock name
+        # the response still goes throuhg, but queryCount is set
+        # to 0, so to catch this error, nothing is returned
+        if(data['queryCount'] != 0):
         # returns just the list of number
-        return data["results"]
+            return data['results']
     # else returns code   
     else:
         respoce.status_code

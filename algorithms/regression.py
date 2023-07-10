@@ -32,7 +32,6 @@ def getYIntercept(xs, ys):
 # returns it as a string
 def getReggressionLine():
     data = main.getData()
-    print(data)
     if (type(data) == list):
           # xs is the list of x values and y is the list of y values
         xs = []
@@ -44,8 +43,8 @@ def getReggressionLine():
         for x in range(len(data)):
             xs.append(x)
         # the slope and y-intercept are found and then rounded to 3 places
-            slope = round(getSlope(xs, ys), 3)
-            b = round(getYIntercept(xs, ys), 3)
+        slope = round(getSlope(xs, ys), 3)
+        b = round(getYIntercept(xs, ys), 3)
         # the if statment makes sure the correct sign are added to b
         # it also coverts slope and b to strings so it can concatenated
         if (b > 0):
@@ -55,6 +54,9 @@ def getReggressionLine():
         else:
             return ("y = " + str(slope) + "x " + str(b))
     else:
-        print(f"Error code: {data}")
-
-getReggressionLine()
+        # if nothing was returned (possibly becasue user gave
+        # a nonexsisting stock name) then data's type is none
+        if (type(data) == None):
+            print("Error: No data was returned")
+        else:
+            print(f"Error code: {data}")
