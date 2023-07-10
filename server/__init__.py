@@ -15,7 +15,7 @@ def create_app():
     app = Flask(__name__)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{os.environ.get("PG_USR")}:{os.environ.get("PG_PASSWD")}@{os.environ.get("PG_URL")}/postgres'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{os.environ["PG_USR"]}:{os.environ["PG_PASSWD"]}@{os.environ["PG_URL"]}/postgres'
 
     db.init_app(app)
 

@@ -1,4 +1,4 @@
-Babalada
+www.babalada.com
 ===
 A stock investment simulator
 ---
