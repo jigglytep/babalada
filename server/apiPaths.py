@@ -34,6 +34,10 @@ def login():
     # auth = request.form
 
     # debug
+    # auth = {
+    #     'email': a@a.com
+    #     'password': 123
+    # }
     auth = {
         'email': json_str.split('\n')[3].strip(),
         'password': json_str.split('\n')[7].strip()
