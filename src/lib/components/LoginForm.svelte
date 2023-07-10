@@ -37,14 +37,14 @@
 			<input type="text" name="email" placeholder="Email Address" required/>
 			<input type="password" name="password" placeholder="Password" required/>
 			<a href="#">Forgot password?</a>
-			<input type="submit" value="Login"/>
+			<input type="submit" name="login-submit" value="Login"/>
 		</form>
 	{:else}
 		<form method="POST" action="/api/signup" class="signup" autocomplete="off" on:submit={submitSignup} bind:this={signupFormHTML}>
 			<input type="text" name="email" placeholder="Email Address" required/>
 			<input type="password" name="password" placeholder="Password" required/>
 			<input type="password" name="password-confirm" placeholder="Confirm Password" required/>
-			<input type="submit" value="Signup"/>
+			<input type="submit" name="signup-submit" value="Signup"/>
 		</form>
 	{/if}
 </div>
