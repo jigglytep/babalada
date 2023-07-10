@@ -174,3 +174,5 @@ package-lock.json
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 !src/lib
+id_rsa_do
+id_rsa_do.pub
