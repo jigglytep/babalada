@@ -1,6 +1,5 @@
 import requests
 import json
-import regression
 
 # api: https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to
 
@@ -17,7 +16,7 @@ def getData():
         return data["results"]
     # else returns code   
     else:
-        return respoce.status_code
+        respoce.status_code
 
 # configures the url with the correct params
 def configUrl():
@@ -34,17 +33,3 @@ def configUrl():
     # the last parts are added to the url to complete it
     url += "/range/25/minute/" + start + "/" + end +"?apiKey=KAwpTRBlsFOLCDCJLV4p8dbYeUnCphMQ"
     return url
-
-# gets stock data and find regression line 
-def compute(data):
-    # xs is the list of x values and y is the list of y values
-    xs = []
-    ys = []
-    # the open price for a stock is added into ys
-    for el in data:
-        ys.append(el["o"])
-    # then 1 to len(data) are added into xs
-    for x in range(len(data)):
-        xs.append(x)
-    # then the regression line is found
-    return regression.findReggressionLine(xs, ys)

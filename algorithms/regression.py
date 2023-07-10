@@ -10,6 +10,7 @@
 #   b = mean of (y) - m * mean of (x)
 
 from functools import reduce
+import main
 
 def meanOf(nums):
     # reduce adds all the element in nums together
@@ -29,15 +30,31 @@ def getYIntercept(xs, ys):
 
 # finds the equation for the reggression line
 # returns it as a string
-def findReggressionLine(xs, ys):
-    # the slope and y-intercept are found and then rounded to 3 places
-    slope = round(getSlope(xs, ys), 3)
-    b = round(getYIntercept(xs, ys), 3)
-    # the if statment makes sure the correct sign are added to b
-    # it also coverts slope and b to strings so it can concatenated
-    if (b > 0):
-        return ("y = " + str(slope) + "x + " + str(b))
-    elif (b == 0):
-        return ("y = " + str(slope) + "x")
+def getReggressionLine():
+    data = main.getData()
+    print(data)
+    if (type(data) == list):
+          # xs is the list of x values and y is the list of y values
+        xs = []
+        ys = []
+        # the open price for a stock is added into ys
+        for el in data:
+            ys.append(el["o"])
+        #then 1 to len(data) are added into xs
+        for x in range(len(data)):
+            xs.append(x)
+        # the slope and y-intercept are found and then rounded to 3 places
+            slope = round(getSlope(xs, ys), 3)
+            b = round(getYIntercept(xs, ys), 3)
+        # the if statment makes sure the correct sign are added to b
+        # it also coverts slope and b to strings so it can concatenated
+        if (b > 0):
+            return ("y = " + str(slope) + "x + " + str(b))
+        elif (b == 0):
+            return ("y = " + str(slope) + "x")
+        else:
+            return ("y = " + str(slope) + "x " + str(b))
     else:
-        return ("y = " + str(slope) + "x " + str(b))
+        print(f"Error code: {data}")
+
+getReggressionLine()
