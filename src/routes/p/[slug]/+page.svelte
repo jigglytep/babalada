@@ -1,76 +1,69 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  export let pageData: PageData;
+  export let data: PageData;
+  import { GET } from '../../api/[slug]/+server'
+
+  // for chartjs
+  import { Chart } from 'chart.js/auto'
+  import { onMount } from "svelte";
+
+  // fake content vars
   let stocks = [
-    {ticker: "FSC", name:"FakeStock.com", price: "$1.00", quanity: "1"},
-    {ticker: "S12", name: "Stock123.com", price: "$2.50", quanity: "3"}
+    {ticker: "FSC", name:"FakeStock.com", price: "$1.00", quanity: 1},
+    {ticker: "S12", name: "Stock123.com", price: "$2.50", quanity: 3}
   ]
-  function sell() {
-    console.log("Sell");
+  let name: String = "John Smtih";
+  // chart js varibles
+  let chartCanvas: any;
+  let chartData: Array<Number> = [1, 2, 3, 4, 5];
+  let chartLabels: Array<String> = ["L1", "L2", "L3", "L4", "L5"];
+  let ctx:any;
+  let linechart: any;
+
+  // modal varibles
+  let stockName: String;
+  let stockModal: any;
+
+  function createGraph() {    
+      ctx = chartCanvas.getContext('2d');
+      linechart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            label: 'Metrics',
+            data: chartData
+          }]
+        }
+      })
+    };
+  
+onMount(createGraph);
+
+function sell(stock: any) {
+  if (stock.quanity > 0) {
+    stock.quanity -= 1;
   }
-  function buy() {
-    console.log("Buy")
-  }
-  let name : string = "John Smtih";
+}
+function buy(stock: any) {
+  stock.quanity += 1;
+}
 
-  let chartData:Array<Number> = []
-  let chartLabels:Array<String> = []
-  let count: any = 0;  
-  let chart: any;
-  let temp: string;
+function inspect(name: String) {
+  stockModal = document.getElementById('modal');
+  stockModal.showModal();
+  stockName = name;
+}
 
-  function addData() {
-    while(count <= 100) {
-      temp = "L" + count;
-      chartLabels.push(temp);
-      temp = "";
-      chartData.push(count);
-      count++;
-      chartData = chartData;
-      chart.update();
-      console.table(count);
-    }
-  }
+function closeInspect() {
+  stockModal.close();
+}
 
-  // chart js
-  import {
-    Chart,
-  } from 'svelte-chartjs';
-  import {
-    Chart as ChartJS,
-    Tooltip,
-    Legend,
-    BarElement,
-    PointElement,
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    LineController,
-    BarController,
-  } from 'chart.js';
+function testGet() {
+  
+}
 
-  ChartJS.register(
-    LinearScale,
-    CategoryScale,
-    BarElement,
-    PointElement,
-    LineElement,
-    Legend,
-    Tooltip,
-    LineController,
-    BarController
-  );
 
-  let linedata = {
-  labels: chartLabels,
-  datasets: [
-    {
-      type: 'bar',
-      label: 'Test Chart 1',
-      data: chartData
-    }
-  ]
-  }
 </script>
 
 <div id="main-container">
@@ -79,10 +72,9 @@
   <br />
   <div id="secondary-container">
     <h2>Metrics</h2>
-    <div id="chart">
-      <Chart data={linedata} options={{responsive: true}} bind:chart/> 
+    <div id="charts">
+      <canvas bind:this={chartCanvas} id="chartCanvas"></canvas>
     </div>
-    <button on:click={addData}>Add Data</button>
     <h2>Stocks Owned</h2>
     <br />
     {#if stocks.length === 0}
@@ -105,12 +97,18 @@
             <td>{stock.name}</td> 
             <td>{stock.price}</td> 
             <td>{stock.quanity}</td> 
-            <td><button on:click={sell}>Sell Shares</button><button on:click={buy}>Buy Shares</button></td>
+            <td><button on:click={() => {sell(stock)}}>Sell Shares</button><button on:click={() => {buy(stock)}}>Buy Shares</button>
+            <button on:click={() => {inspect(stock.name)}}>Inspect</button></td>
           </tr>
           {/each}
       </tbody>
     </table>
     {/if}
+    <dialog id="modal">
+      <h2>{stockName}</h2>
+      <button on:click={closeInspect}>Toggle Inspect</button>
+      <button on:click={testGet}>Test GET</button>
+    </dialog>
     <br />
     <h2>Aviable Stocks</h2>
     <br />
@@ -133,8 +131,18 @@
     padding: .5em;
   }
 
-  #chart {
-    height: auto;
-    width: auto;
+  #modal::backdrop {
+    background-color: grey; 
+    opacity: .65;
   }
+
+  #modal {
+    width: 55em;
+    height: 45em;
+    margin: auto;
+    padding: 1em;
+    border-radius: 15px;
+    box-shadow: 7px 5px 5px black;
+  }
+
 </style>
