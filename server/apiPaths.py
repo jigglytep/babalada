@@ -17,14 +17,14 @@ def index():
     return jsonify(home)
 
 
-@api.route('/api/profile')
+@api.route('/api/account')
 @token_required
-def api_profile(current_user):
-    user = {
-        "name": current_user.name,
-        "email": current_user.email
+def api_account(current_account):
+    account = {
+        "name": current_account.name,
+        "email": current_account.email
     }
-    return jsonify(user)
+    return jsonify(account)
 
 
 @api.route('/api/login', methods=['POST'])

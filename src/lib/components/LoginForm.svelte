@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { login } from "$api/AccountRequests";
+
 	let doSignUp = false;
 
 	let loginFormHTML: HTMLFormElement;
@@ -6,17 +8,7 @@
 
 	const submitLogin = async (e: SubmitEvent) => {
 		e.preventDefault();
-		const response = await fetch(
-			loginFormHTML.action,
-			{
-				method: loginFormHTML.method,
-				body: new FormData(loginFormHTML),
-				redirect: 'follow',
-			}
-		);
-		const responseJSON = await response.json();
-		console.log(JSON.stringify(responseJSON));
-		// TODO: implement update of AccountStore from response
+		login(new FormData(loginFormHTML));
 	}
 	const submitSignup = async (e: SubmitEvent) => {}
 </script>
