@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 let ports = [
     {name: "Main", created: "7/6/2023", funds: "$1,345"},
     {name: "Backup", created: "7/6/2023", funds: "$1,245"},
@@ -6,8 +6,12 @@ let ports = [
     {name: "Portfolio4", created: "7/5/2023", funds: "$0.01"}
   ]
 
-  function remove() {
-    console.log("delete");
+  function remove(port: any) {
+    let p = ports.find(p => p.name == port.name);
+    if (p != null) {
+      ports.splice(ports.indexOf(p), 1);
+    }
+    ports = ports;
   }
 </script>
 
@@ -23,7 +27,8 @@ let ports = [
         <br />
         <small>Current Funds: {p.funds}</small>
         <br />
-        <button on:click={remove}>Delete</button>
+        <button><a href="/p/{p.name}">Inspect</a></button>
+        <button on:click={() => remove(p)}>Delete</button>
       </div>
       {/each}
   {/if}
@@ -49,5 +54,10 @@ let ports = [
   button {
     padding: 1em;
     background-color: gainsboro;
+  }
+
+  button a:link, a:visited, a:hover {
+    color: black;
+    text-decoration: none;
   }
 </style>
