@@ -1,3 +1,4 @@
+import yfinance as yf
 from flask import request, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -119,3 +120,9 @@ def signup():
         return make_response(jsonify({'token': token}), 201)
     else:
         return make_response(jsonify('User already exists. Please Log in.', 202))
+
+
+@api.route('/api/stock_info/<ticker>', methods=['GET'])
+def stock_info(ticker="MSFT"):
+    data = yf.Ticker(ticker)
+    return make_response(jsonify(data.info, 200))
