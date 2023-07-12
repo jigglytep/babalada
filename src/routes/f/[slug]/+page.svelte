@@ -2,64 +2,84 @@
   import type { PageData } from "./$types";
 	export let data: PageData;
 
-  let title = "Why Should You Buy 30 Shares of FakeStock123";
-  let author = "John Smtih";
-  let created = "7/6/2023";
   let comments = [
-    {author: "FakeUser2", created: "7/6/2023", content: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita, rerum?"},
-    {author: "StockExpert", created: "7/6/2023", content: "Hic recusandae labore id repellat reiciendis illum suscipit, in, vero et inventore at, ratione quae. Sed, atque amet? Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda quis error similique. Facere laboriosam quia non vel reiciendis dolores. Commodi, pariatur non tenetur nobis recusandae est libero blanditiis ullam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dicta veniam dolore provident expedita nobis quae nisi explicabo, est eos perspiciatis numquam error eum earum qui accusantium odit, iste fugiat."},
-    {author: "User1234", created: "7/6/2023", content: "Non excepturi delectus deleniti!"}
+    {user: "StockExpert", content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur totam est corrupti!"},
+    {user: "John Smith", content:  "Illo, perferendis atque delectus cupiditate praesentium dignissimos repellat reprehenderit."},
+    {user: "StockPresident", content: "Ratione iusto ipsam doloribus adipisci maxime officiis nesciunt sint totam at dolores?"},
+    {user: "MrStocks", content: "Lorem ipsum dolor sit amet consectetur, adipisicing elit."},
+    {user: "StockTrader1000", content: "Recusandae obcaecati nemo harum fuga neque eligendi similique illum mollitia ducimus, nostrum provident exercitationem qui amet"}
   ]
+
 </script>
 
 <div id="main-container">
-  <h1>"{title}"</h1>
-  <h3 id="byline">Created by {author} on {created}</h3>
-  <br />
-  <div id="secondary-container">
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita, rerum? Sed, voluptas officiis. Iste, laudantium non ab enim voluptatum suscipit voluptatem? Reprehenderit velit saepe eum unde ratione nobis perferendis non. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias corporis accusamus harum aut eos voluptate, exercitationem repellat officia quo veniam nobis officiis fugit dicta deserunt ducimus aperiam placeat at quibusdam.</p>
+  <div id="forum">
+    <h1>{data.slug}</h1>
+    <h3>Posted on 7/11/2023 by BabaladaUser1</h3>
     <br />
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique sit possimus excepturi corporis doloremque minima praesentium reprehenderit quas aliquid. Labore odio maiores saepe animi modi reiciendis obcaecati unde sequi autem. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum in sapiente quibusdam asperiores unde, enim ex debitis repudiandae accusantium nemo facilis, quam incidunt laborum facere nesciunt sunt consequatur aperiam consectetur!</p>
-    <br /> 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non excepturi delectus deleniti! Hic recusandae labore id repellat reiciendis illum suscipit, in, vero et inventore at, ratione quae. Sed, atque amet? Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda quis error similique. Facere laboriosam quia non vel reiciendis dolores. Commodi, pariatur non tenetur nobis recusandae est libero blanditiis ullam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dicta veniam dolore provident expedita nobis quae nisi explicabo, est eos perspiciatis numquam error eum earum qui accusantium odit, iste fugiat.</p>
-    <br />
-  </div>
-  <h1>Comments</h1>
-  <br />
-  {#if comments.length == 0} 
-  <p>There are no comment</p>
-  {:else}
-    {#each comments as c}
-    <div class="comment">
-      <p>{c.author}</p>
-      <p>{c.created}</p>
+    <div id="content">
+      <h3>Repellendus Necessitatibus</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur totam est corrupti voluptate quidem minus rem, cupiditate quod ea, exercitationem mollitia eius, esse non at laudantium alias fugiat natus consectetur? Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nisi incidunt cupiditate. Officia est aperiam unde distinctio voluptates ab iusto maiores fugiat autem nostrum? Eaque dolorum molestias pariatur quae obcaecati. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus a laborum libero ipsam itaque aliquam ea, sed saepe asperiores aperiam alias, ratione reprehenderit dolorum quidem est ad perferendis delectus. Deleniti.</p>
       <br />
-      <p>{c.content}</p>
-    </div>
+      <h3>Consectetur Adipisicing Elit</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis eum, esse enim qui ut in minus eaque quos rem nulla. Reprehenderit veniam, fuga voluptas totam laboriosam maiores ipsa odit asperiores. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum, id, voluptatum culpa ducimus nisi blanditiis sequi adipisci excepturi illum, facere vitae harum enim sit ex. Provident rerum sit consectetur ipsa! Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor quaerat ea asperiores accusamus, sit soluta quibusdam dolorum rerum. Dicta consequuntur esse veritatis voluptas adipisci mollitia rerum porro qui tempora id. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe eius distinctio ducimus, molestias id voluptatum reprehenderit eum sit dicta, veniam consequatur eligendi tenetur mollitia, reiciendis repellendus quis maiores. Expedita, laudantium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, libero ipsam quos, eveniet ipsum fugit cupiditate dicta ullam, consectetur quasi quae amet facere culpa accusamus assumenda rerum at. Quam, facilis!</p>
+      <br />
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, perferendis atque delectus cupiditate praesentium dignissimos repellat reprehenderit ratione iusto ipsam doloribus adipisci maxime officiis nesciunt sint totam at dolores Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae obcaecati nemo harum fuga neque eligendi similique illum mollitia ducimus, nostrum provident exercitationem qui amet. Temporibus dolorem quasi fugit. Dolorum, dolore.</p>
+  </div>
+  </div>
+  <div id="comments-container">
+    <h1>Comments</h1>
+    {#each comments as c}
+      <div class="comment">
+        <div class="comment-content">
+          <h3>User: {c.user}</h3>
+          <br />
+          <p>{c.content}</p>
+        </div>
+      </div>
     {/each}
-  {/if}
+  </div>
 </div>
 
-<style>
+<style lang="scss">
   #main-container {
     width: 90%;
     margin: auto;
-    padding-top: 1em;
+    margin-bottom: 0;
+    padding: 1em 1em 1em 0;
   }
 
-  #byline {
-    padding-left: 1em;
+  #forum {
+    border: 2px solid black;
+    border-radius: 15px;
+    box-shadow: 3px 3px black;
+    padding: .75em;
   }
 
-  #secondary-container {
-    width: 95%;
-    margin: auto;
+  #comments-container {
+    border: 2px solid black;
+    border-radius: 15px;
+    box-shadow: 3px 3px black;
+    h1 {
+      padding: .25em .75em .25em .75em;
+    }
+  }
+
+  
+  #content{
+    h3 {
+      padding-bottom: .25em;
+    }
+    p {
+      text-indent: 2em;
+    }
   }
 
   .comment {
     border: 1px solid black;
-    border-radius: 15px;
+  }
+
+  .comment-content{
     padding: 1em;
-    margin: 1em;
   }
 </style>
