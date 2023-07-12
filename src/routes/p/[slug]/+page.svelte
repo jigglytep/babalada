@@ -112,29 +112,16 @@ function closeInspect() {
   stockLineChart.destroy();
 }
 
-function testGet() {
-  let params: Partial<Record<string, string>>;
-  let request: Request;
-  let myHeaders: Headers = new Headers();
-  let controller: AbortController = new AbortController();
-  /*request = {
-    body: null,
-    bodyUsed: false,
-    cache: "default",
-    credentials: "same-origin",
-    destination: "object",
-    headers: myHeaders,
-    integrity: "test",
+async function getStockInfo() {
+  let params: String = "stock_info/aapl";
+  let reqHeaders: Headers = new Headers();
+  let request: RequestInit = {
     method: "GET",
-    mode: "cors",
-    redirect: "manual",
-    referrer: "client",
-    referrerPolicy: "no-referrer",
-    // signal
-    url: "",
-    keepalive: false,
+    headers: reqHeaders
   }
-  */
+  const fetchres = await fetch("http://127.0.0.1:5000/api/stock_info/aapl", request);
+  const res = await fetchres.json();
+  console.log(res);
 }
 
 
@@ -200,6 +187,7 @@ function testGet() {
         <h3>Shares Owned: {stockOwned}</h3>
         <h3>Out of Price Range: No</h3>
         <button on:click={() => {sell(stockName)}}>Sell Shares</button>
+        <button on:click={getStockInfo}>TEST GET</button>
       </div>
     </dialog>
     <br />

@@ -1,96 +1,144 @@
 <script>
-    let forums = [
-        {title: "FakeStocks123 is the Future", created: "7/6/2023", author: "RealUser2", content: "All legislative Powers herein granted shall be vested in a Congress of the United States, which shall consist of a Senate and House of Representatives. The House of Representatives shall be composed of Members chosen every second Year by the People of the several States, and the Electors in each State shall have the Qualifications requisite for Electors of the most numerous Branch of the State Legislature."},
-        {title: "Why You Should Buy 30 Shares of CoolStock", created: "7/4/2023", author: "John Smtih", content: "The Senate of the United States shall be composed of two Senators from each State, chosen by the Legislature thereof, for six Years; and each Senator shall have one Vote.Immediately after they shall be assembled in Consequence of the first Election, they shall be divided as equally as may be into three Classes. The Seats of the Senators of the first Class shall be vacated at the Expiration of the second Year, of the second Class at the Expiration of the fourth Year, and of the third Class at the Expiration of the sixth Year, so that one third may be chosen every second Year;"}, 
-        {title: "Just Bought 3 Shares of Stock12", created: "7/2/2023", author: "Geogre Washington", content: "The Times, Places and Manner of holding Elections for Senators and Representatives, shall be prescribed in each State by the Legislature thereof; but the Congress may at any time by Law make or alter such Regulations, except as to the Places of chusing Senators. The Congress shall assemble at least once in every Year, and such Meeting shall be on the first Monday in December, unless they shall by Law appoint a different Day."}
-    ]
-
-    let trending = [
-        {title: "Stock3's Shares Are Down", author: "User25"},
-        {title: "The Best Stocks of 2023", author: "StockExpert"},
-        {title: "$3 a Share??!", author: "StockMan12"}
-    ]
-
-    let users = [
-        {name: "StockExpert"},
-        {name: "John Smtih"},
-        {name: "User25"},
-        {name: "RealUser2"}
+    let names = [
+        {title: "Why You Should Buy 30 Stocks of FakeStock123"},
+        {title: "How To Learn To Trade Stocks"},
+        {title: "Why Babalada Is The Best Stock Trading Website!!"},
+        {title: "How The Stock Market Works"},
+        {title: "Stock Trading Explain Like A 5-Year-Old Would Do"}
     ]
 </script>
 
 <div id="main-container">
-    <header>
-        <h1>Babalada Forums</h1>
-        <hr />
-        <br />
-    </header>
-    <aside id="userForms">
-        <h3>Trending Users</h3>
-        <ol>
-            {#each users as user}
-                <li>{user.name}</li>
-            {/each}
-        </ol>  
-    </aside>
-    <main>
-        {#each forums as f}
-        <div class="forums">
-            <h2>{f.title}</h2>
-            <h3>By {f.author}</h3>
-            <p>{f.created}</p>
-            <br />
-            <p><small>{f.content}</small></p>
+    <section id="left-section">
+        <div id="sticky">
+            <h2 id="trending">Trending</h2>
+            <h3 class="topic">Forums</h3>
+            <div class="side-content">
+                <ol>
+                    <li>Why You Should Buy 30 Stocks of FakeStock123</li>
+                    <li>FakeStock123? Best Stock Ever?</li>
+                    <li>Don't Buy Shares of FakeStock123</li>
+                    <li>Wasted My Life Savings on FakeStock123</li>
+                    <li>Got 1000 Shares of FakeStock123</li>
+                </ol>
+            </div>
+            <h3 class="topic">Topics</h3>
+            <div class="side-content">
+                <ol>
+                    <li>#FakeStock123</li>
+                    <li>#Babalada</li>
+                    <li>#StockStories</li>
+                    <li>#BestStockOf2023</li>
+                    <li>#BestStockTrader</li>
+                </ol>
+            </div> 
         </div>
-        {/each}
+    </section>
+    <main id="main-section">
+        <div class="forum">
+            <h2>Best Stocks Of 2023</h2>
+            <h3>By StockExpert</h3>
+            <p><small>Posted on 7/11/2023</small></p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+        </div>
+        <div class="forum">
+            <h2>How To Gain 1.3 Million Dollar Through Stocks</h2>
+            <h3>John Smith</h3>
+            <p><small>Posted on 7/8/2023</small></p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+        </div>
+        <div class="forum">
+            <h2>Recently Left My Job and Became Full-Time Stock Expect - These Are My Tips and Secerts</h2>
+            <h3>By FullTimeStocker</h3>
+            <p><small>Posted on 7/5/2023</small></p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+            <br />
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ex perspiciatis odit quo maxime consectetur inventore pariatur veritatis nostrum ducimus vero, architecto velit totam sint quia! Voluptates est quisquam aliquam.</p>
+        </div>
     </main>
-    <aside id="trending">
-        <h3>Trending</h3>
-        <ol>
-            {#each trending as t}
-                <li>"{t.title}" by {t.author}</li>
-            {/each}
-        </ol>  
-    </aside>
+    <section id="right-section">
+        <div id="sticky">
+            <h2 class="topic">Your Forums</h2>
+            <div class="side-content">
+                <ol>
+                    {#each names as n}
+                        <li><a href="f/{n.title}">{n.title}</a></li>
+                    {/each}
+                </ol>
+            </div>
+        </div>
+    </section>
 </div>
-  
-  <style>
+
+
+<style>
     #main-container {
-      width: 90%;
-      margin: auto;
-      padding-top: 1em;
-      display: grid;
-      grid-template-columns: 33%, 33%, 33%;
-      grid-template-rows: 10em, auto;
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+        min-height: 88.25vh;
     }
 
-    header {
-        grid-column: 1 / 4;
-        grid-row: 1 / 2;
-    }
-
-    #userForms {
+    #left-section {
         grid-column: 1 / 2;
-        grid-row: 2 / 3;
+        border: 1.5px solid black;
     }
 
-    main {
+    #main-section {
         grid-column: 2 / 3;
-        grid-row: 2 / 3;
+        border: 1.5px solid black;
     }
 
-    #trending{
+    #right-section{
         grid-column: 3 / 4;
-        grid-row: 2 / 3;
+        border: 1.5px solid black;
+        }
+
+    #trending {
+        text-align: center;
+        padding-top: .5em;
     }
 
-    .forums {
-        width: 35em;
-        height: auto;
-        background-color: grey;
-        border-radius: 15px;
-        color: white;
-        padding: 1em;
-        margin-bottom: 1em;
+    .topic {
+        text-align: center;
+        padding-top: .5em;
+        padding-bottom: .5em;
     }
-  </style>
+
+    .forum {
+        height: auto;
+        width: auto;
+        background-color: lightgrey;
+        border-radius: 15px;
+        margin: 2em 6em;
+        padding: .75em;
+    }
+
+    #sticky {
+        position:sticky;
+        top: 0;
+        border-top: 1.5px solid black;
+    }
+
+    .side-content {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    li a:link, a:visited, a:hover {
+    color: blue;
+    text-decoration: none;
+  }
+</style>
