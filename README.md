@@ -40,19 +40,14 @@ This app is set up to use [Fly.io] to deploy a Docker container. To deploy with 
 From here, you can access the server remotely via SSH by running `flyctl ssh console`.
 
 ### Run API Without Docker
-* You must be operating on an Ubuntu machine or equivalent.
+* You must be operating on an Ubuntu machine or equivalent (like WSL).
 * [Install Python 3] and ensure it's accessible by PATH.
 * Open a terminal in the root directory of this repository.
 * Run `python -m venv venv` to create the virtual environment.
 * Run `source venv/bin/activate` to activate the virtual environment.
 * Run `pip install -r requirements.txt` in the terminal to install server dependencies within your virtual environment.
-* Run the following to create environment variables:
-```
-export FLASK_APP=server
-export PG_PASSWD=<.env>
-export PG_USR=<.env>
-export PG_URL=<.env>
-```
+* Add secrets to .env file.
+* Use VS Code to run the Flask server with "Run and Debug".
 
 [SvelteKit]: https://kit.svelte.dev/docs/introduction
 [Typescript]: https://www.typescriptlang.org/why-create-typescript

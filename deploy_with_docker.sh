@@ -15,7 +15,6 @@ while IFS= read -r input_line || [[ -n "$input_line" ]]; do
 	# remove quotes from flyctl env (until https://github.com/superfly/flyctl/issues/589 is resolved)
 	flyctl_env_vars+=$(echo "$input_line " | tr -d '"')
 done < .env
-echo ${flyctl_env_vars[@]}
 
 # set flyctl env secrets
 flyctl secrets set --stage ${flyctl_env_vars[@]}

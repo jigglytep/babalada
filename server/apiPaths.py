@@ -30,19 +30,19 @@ def api_account(current_account):
 
 @api.route('/api/login', methods=['POST'])
 def login():
-    json_str = request.data.decode('utf-8')
-    # TODO: find proper solution
-    # auth = request.form
+    # json_str = request.data.decode('utf-8')
+    auth = request.form
 
     # debug
     # auth = {
     #     'email': a@a.com
     #     'password': 123
     # }
-    auth = {
-        'email': json_str.split('\n')[3].strip(),
-        'password': json_str.split('\n')[7].strip()
-    }
+
+    # auth = {
+    #     'email': json_str.split('\n')[3].strip(),
+    #     'password': json_str.split('\n')[7].strip()
+    # }
     if not auth:
         # returns 
         return make_response(jsonify(
