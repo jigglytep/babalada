@@ -9,22 +9,20 @@
   console.log(data);
 </script>
 
-<div id="main-container">
-  <h1>Welcome to Babalada!</h1>
-  <div id="secondary-container">
-  </div>
+<div id="first-container">
+  <h1>"INSERT INFO HERE"</h1>
 </div>
+<p>TEST</p>
 
 <style>
-  #main-container {
-    width: 90%;
-    margin: auto;
-    padding-top: 1em;
+  #first-container {
+    min-height: 88vh;
+    display: grid;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
-  #secondary-container {
-    width: 95%;
-    margin: auto;
-  }
 
 </style>
