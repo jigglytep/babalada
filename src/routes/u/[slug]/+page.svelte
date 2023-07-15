@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { PageData } from "./$types";
 	export let data: PageData;
+  import PortfolioThumbnail from "$components/PortfolioThumbnail.svelte";
+  import userIcon from '../../../lib/pictures/userIcon.png'
 
-  let name = "John Smtih";
   let bio = "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.";
   let currentYear: number = new Date().getFullYear();
   let stocks = [
@@ -10,18 +11,18 @@
     {ticker: "S12", name: "Stock123.com", price: "$2.50", quanity: "3"}
   ]
   let ports = [
-    {name: "Main", created: "7/6/2023", funds: "$1,345"},
-    {name: "Backup", created: "7/6/2023", funds: "$1,245"},
-    {name: "Startegy 3", created: "7/1/2023", funds: "1,320.85"},
-    {name: "Portfolio4", created: "7/5/2023", funds: "$0.01"}
+    {name: "Main", created: "7/6/2023", funds: 1345},
+    {name: "Backup", created: "7/6/2023", funds: 1245},
+    {name: "Startegy 3", created: "7/1/2023", funds: 1320.85},
+    {name: "Portfolio4", created: "7/5/2023", funds: 0.01}
   ]
 </script>
 
 <div id="main-container">
-  <div id="picturePlaceholder"></div>
+  <img src={userIcon} alt="User's profile picture">
   <div id="userInfo">
-    <h1>{name}</h1>
-    <p>Username: @JohnSmtih1</p>
+    <h1>{data.slug}</h1>
+    <p>Username: @Babalada1</p>
     <br />
     <h4>Bio: "{bio}""</h4>
     <br />
@@ -42,15 +43,10 @@
   <main id="mainUserInfo">
     <h2>Active Portfolios</h2>
     {#if ports.length == 0}
-    <p>{name} has no created portfolios</p>
+    <p>{data.slug} has no created portfolios</p>
     {:else}
       {#each ports as p, i}
-      <div class="port">
-        <h3>{i + 1}) {p.name}</h3>
-        <small>Created: {p.created}</small>
-        <br />
-        <small>Current Funds: {p.funds}</small>
-      </div>
+      <PortfolioThumbnail number = {i + 1} name = {p.name} created = {p.created} funds = {p.funds} />
       {/each}
   {/if}
   </main>
@@ -66,14 +62,10 @@
     grid-template-rows: 17em auto;
   }
   
-  #picturePlaceholder {
+  img {
     width: 15em;
     height: 15em;
-    background-color: grey;
     margin-right: 1em;
-    grid-column: 1/ 2;
-    grid-row: 1 / 2;
-    border-radius: 15px;
   }
   
   #userInfo {
@@ -91,13 +83,5 @@
     grid-row: 2 / 3;
   }
 
-  .port {
-    width: auto;
-    height: auto;
-    background-color: grey;
-    border-radius: 15px;
-    margin-bottom: 1em;
-    color: white;
-    padding: 1em;
-  }
+
 </style>

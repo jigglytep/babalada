@@ -1,70 +1,54 @@
-<script>
-    let users = [
-        {name: "John Smtih", username: "JohnSmtih1"},
-        {name: "Jane Don", username: "StockExpert"},
-        {name: "James Smith Jr", username: "RealUser2"},
-        {name: "Bill Bob", username: "StockHaver"},
-        {name: "Thomas LastName", username: "InvestKnower"},
-        {name: "Douglas Thomas", username: "CaptinStocks"},
-        {name: "Geogre Washington", username: "PresidentofStocks"},
-        {name: "Kate Mitchel", username: "StocksRCool"}
-    ]
-
-    function goToProfile() {
-        console.log("goToProfile");
-    }
+<script lang="ts">
+  import UserThumbnails from "$components/UserThumbnails.svelte";
+  let users = [
+    {name: "John Smith", username: "JohnSmith1", ports: 10, stocks: 15},
+    {name: "Jane Doe", username: "StockExpert", ports: 5, stocks: 20}, 
+    {name: "James Smith Jr", username: "RealUser2", ports: 3, stocks: 10},
+    {name: "Bill Bob", username: "StockHaver", ports: 2, stocks: 31},
+    {name: "Thomas LastName", username: "InvestKnower", ports: 1, stocks: 42},
+    {name: "Douglas Thomas", username: "CaptinStocks", ports: 5, stocks: 2},
+    {name: "Geogre Washington", username: "PresidentStocks", ports: 3, stocks: 1}
+  ]
 </script>
 
 <div id="main-container">
-    <h1>Users</h1>
-    <hr />
-    <br />
-    <div id="secondary-container">
-        {#if users.length == 0}
-            <p>You have no created portfolios</p>
-        {:else}
-        {#each users as u}
-            <div class="user">
-                <div class="picture"></div>
-                <h3>{u.name}</h3>
-                <p>@{u.username}</p>
-                <br />
-                <button on:click={goToProfile}>Go To Profile</button>
-            </div>
-        {/each}
-        {/if}
+  <h1>Search Users</h1>
+  <div id="users-container">
+    {#if users.length == 0}
+    <p>No Users Found</p>
+    {:else}
+    <div id="headers">
+      <p id="placeholder">img</p>
+      <p>Name</p>
+      <p>Number of Active Portfolios</p>
+      <p>Number of Owned Stocks</p>
+      <p>Go To Profile</p>
     </div>
+    {#each users as u}
+    <UserThumbnails name = {u.name} username = {u.username} numOfPorts = {u.ports} numOfStocks = {u.stocks}/>
+    {/each}
+    {/if}
+  </div>
 </div>
 
-<style>
-  #main-container {
-    width: 90%;
-    margin: auto;
-    padding-top: 1em;
-  }
-
-  #secondary-container {
+<style lang="scss">
+  #main-container, #users-container{
     width: 95%;
     margin: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
   }
 
-  .picture {
-    width: 10em;
-    height: 10em;
-    background-color: black;
-    padding: 1em;
+  #main-container h1 {
+    padding: .5em;
   }
 
-  .user {
-    width: 12em;
-    height: 20em;
-    background-color: grey;
-    border-radius: 15px;
-    color: white;
-    padding: 1em;
-    margin:1em;
+  #headers {
+    border: .15em solid black;
+    display: grid;
+    grid-template-columns: 5em 30% 20% 20% 20%;
+    text-align: center;
+  }
+
+  #placeholder {
+    visibility: hidden;
   }
 </style>
