@@ -11,4 +11,12 @@ html, body {
 body {
 	display: flex;
 	flex-direction: column;
+	overflow:auto;
+}
+ul {
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 40px;
 }

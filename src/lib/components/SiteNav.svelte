@@ -17,9 +17,10 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 6px 0 6px 0;
+		margin: 0 2rem 0 2rem;
 	}
 	.icon-home {
+		font-size: 2rem;
 		text-decoration: none;
 		color: black;
 		&:hover {
