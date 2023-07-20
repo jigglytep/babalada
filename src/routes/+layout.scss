@@ -11,6 +11,7 @@ html, body {
 body {
 	display: flex;
 	flex-direction: column;
+	overflow:auto;
 }
 ul {
 	margin-block-start: 1em;
