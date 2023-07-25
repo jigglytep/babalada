@@ -1,20 +1,31 @@
 from flask_login import UserMixin
 from . import db
+from dataclasses import dataclass
 
-
+@dataclass
 class User(UserMixin, db.Model):
+    id:int
+    email:str
+    name:str
+
     # primary keys are required by SQLAlchemy
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    balance = db.Column(db.Integer, default=100)
+    # balance = db.Column(db.Integer, )
 
+
+class Portfolio(db.Model):
+    portfolioId = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    portfolioName = db.Column(db.String(100))
+    creationDate = db.Column(db.DateTime)
+    balance = db.Column(db.Integer)
 
 class InvestmentTransacted(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    shares_purchased = db.Column(db.Integer)
     stock_purchase = db.Column(db.String(5))
     purchase_date = db.Column(db.DateTime)
     purchase_price = db.Column(db.Integer)
