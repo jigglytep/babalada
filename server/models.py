@@ -1,8 +1,13 @@
 from flask_login import UserMixin
 from . import db
+from dataclasses import dataclass
 
-
+@dataclass
 class User(UserMixin, db.Model):
+    id:int
+    email:str
+    name:str
+    
     # primary keys are required by SQLAlchemy
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)

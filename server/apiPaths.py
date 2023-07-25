@@ -126,3 +126,22 @@ def signup():
 def stock_info(ticker="MSFT"):
     data = yf.Ticker(ticker)
     return make_response(jsonify(data.info, 200))
+
+
+@api.route('/api/users', methods=['GET'])
+def users():
+    
+    users = User.query.all()
+    if not users:
+        # returns 401 if user does not exist
+        return make_response(jsonify(
+            'Could not retrieve users',
+            401,
+            {'WWW-Authenticate': 'Could not retrieve users'}
+        ))
+
+    return make_response(
+        jsonify(users,
+        201
+    ))
+
