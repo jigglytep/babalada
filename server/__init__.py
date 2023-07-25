@@ -1,22 +1,21 @@
-from flask import Flask
-from flask_alembic import Alembic
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_cors import CORS
 import os
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
+from flask import Flask
+from dotenv import load_dotenv
+load_dotenv()
+# from .models import User
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
 
 def create_app():
     app = Flask(__name__)
-
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
-    print("*"*8)
-    print(
-        f'postgresql+psycopg2://{os.environ.get("PG_USR")}:{os.environ.get("PG_PASSWD")}@{os.environ.get("PG_URL")}/postgres')
-    print("*"*8)
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{os.environ.get("PG_USR")}:{os.environ.get("PG_PASSWD")}@{os.environ.get("PG_URL")}/postgres'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{os.environ["PG_USR"]}:{os.environ["PG_PASSWD"]}@{os.environ["PG_URL"]}/postgres'
 
     db.init_app(app)
     alembic = Alembic()
@@ -44,3 +43,6 @@ def create_app():
     app.register_blueprint(api_blueprint)
 
     return app
+
+
+app = create_app()

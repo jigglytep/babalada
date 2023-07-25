@@ -1,17 +1,3 @@
-### UI ###
-.DS_Store
-node_modules
-pnpm-lock.yaml
-package-lock.json
-/build
-/.svelte-kit
-/package
-.env
-.env.*
-!.env.example
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-
 ### SERVER ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -173,3 +159,20 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+### UI ###
+.DS_Store
+node_modules
+pnpm-lock.yaml
+package-lock.json
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+!src/lib
+id_rsa_do
+id_rsa_do.pub

@@ -11,9 +11,6 @@
             "module": "flask",
             "env": {
                 "FLASK_APP": "server",
-                "PG_URL": "babalada.c1cfxsx3wo9o.us-east-2.rds.amazonaws.com",
-                "PG_PASSWD": "passw0rd",
-                "PG_USR": "postgres",
                 "FLASK_DEBUG": "1"
             },
             "args": [
