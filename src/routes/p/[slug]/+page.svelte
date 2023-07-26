@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   export let data: PageData;
-  import { GET } from '../../api/[slug]/+server'
 
   // for chartjs
   import { Chart } from 'chart.js/auto'
@@ -9,22 +8,21 @@
 
   // fake content vars
   let stocks = [
-    {ticker: "FSC", name:"FakeStock.com", price: 1.00, quanity: 7},
-    {ticker: "S12", name: "Stock123.com", price: 2.50, quanity: 10}
+    {ticker: "AAPL", name:"Apple", price: 0, quanity: 7},
+    {ticker: "AMZN", name: "Amazon", price: 0, quanity: 10},
+    {ticker: "TSLA", name: "Tesla", price: 0, quanity: 3}
   ]
-  let count1 = 0;
-  let count2 = 0;
-  let funds: number = 50.00;
+  let funds: number = 1000.00;
 
   // chart js varibles
   let chartCanvas: any;
-  let chartData: Array<Number> = Array.from({length: 50}, () => Math.floor(Math.random() * 101));
-  let chartLabels: Array<String> = Array.from({length: 50}, () => "L" + ++count1);
+  let chartData: Array<Number> = [];
+  let chartLabels: Array<String> = [];
   let ctx:any;
   let linechart: any;
   let stockChartCanvas: any;
-  let stockChartData: Array<Number> = Array.from({length: 50}, () => Math.floor(Math.random() * 101));
-  let stockChartLabels: Array<String> =  Array.from({length: 50}, () => "L" + ++count2);
+  let stockChartData: Array<Number> = [];
+  let stockChartLabels: Array<String> = [];
   let stockCtx: any;
   let stockLineChart: any;
 
@@ -35,6 +33,46 @@
   let stockPrice: Number;
   let stockOwned: number;
 
+  async function getCurrentPriceForOwnedStocks() {
+    let request: RequestInit = {
+      method: "GET"
+    }
+    let url: any;
+    for(let i = 0; i < stocks.length; i++) {
+      url = "http://127.0.0.1:5000/api/stock_info/" + (stocks[i]["ticker"]).toLowerCase();
+      let fetchResponce = await fetch(url, request);
+      let responce = await fetchResponce.json();
+      stocks[i]["price"] = responce[0]["ask"];
+      stocks = stocks;
+    }
+  }
+
+  function updateMetrics() {
+    let date = new Date();
+    let label = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
+    chartLabels.push(label);
+    chartData.push(funds);
+    linechart.update();
+  }
+
+  async function getStockChartInfo(ticker: String) {
+    let request: RequestInit = {
+      method: "GET"
+    }
+    let url = "http://127.0.0.1:5000/api/stock_info/" + ticker.toLowerCase();
+    for(let i = 0; i < 15; i++) {
+      setTimeout(async () => {
+        let fetchResponce = await fetch(url, request);
+        let responce = await fetchResponce.json();
+        stockChartData.push(responce[0]["ask"]);
+        let date = new Date();
+        let label = `${date.getHours()}:${date.getMinutes()}:${date.getMilliseconds()}`;
+        stockChartLabels.push(label);
+        stockLineChart.update();  
+      }, 3000)
+    }
+  }
+
   function createGraph() {    
     ctx = chartCanvas.getContext('2d');
     linechart = new Chart(ctx, {
@@ -42,28 +80,32 @@
       data: {
         labels: chartLabels,
         datasets: [{
-          label: 'Metrics',
+          label: 'Funds Over Time',
           data: chartData
         }]
       }
-    });
+    })
   }
   
-onMount(createGraph);
+  function createStockGraph() {
+    stockCtx = stockChartCanvas.getContext('2d');
+    stockLineChart = new Chart(stockCtx, {
+      type: "line",
+      data: {
+        labels: stockChartLabels,
+        datasets: [{
+          label: "Price (labels are time)",
+          data: stockChartData
+        }]
+      }
+    })
+  }
 
-function createStockGraph() {
-  stockCtx = stockChartCanvas.getContext('2d');
-  stockLineChart = new Chart(stockCtx, {
-    type: "line",
-    data: {
-      labels: stockChartLabels,
-      datasets: [{
-        label: stockName + " Metrics",
-        data: stockChartData
-      }]
-    }
-  })
-};
+onMount(() => {
+  createGraph();
+  getCurrentPriceForOwnedStocks();
+  updateMetrics();
+});
 
 function sell(name: String) {
   let s = stocks.find(s => s.name == name);
@@ -72,11 +114,12 @@ function sell(name: String) {
       s.quanity = s.quanity - 1;
       stockOwned = s.quanity;
       funds += s.price;
-
     }
     if (s.quanity == 0) {
       stocks.splice(stocks.indexOf(s), 1);
+      closeInspect();
     }
+    updateMetrics();
   }
   stocks = stocks;
 }
@@ -87,6 +130,7 @@ function buy(name: String) {
       s.quanity = s.quanity + 1;
       stockOwned = s.quanity;
       funds -= s.price;
+      updateMetrics();
     }
     else {
       alert("Not Enough Funds");
@@ -104,27 +148,26 @@ function inspect(stock: any) {
   stockPrice = stock.price;
   stockOwned = stock.quanity;
   createStockGraph();
+  getStockChartInfo(stockTicker);
 }
 
 function closeInspect() {
   stockModal.style.display = "none";
   stockModal.close();
   stockLineChart.destroy();
+  stockChartData.splice(0, stockChartData.length);
+  stockChartLabels.splice(0, stockChartLabels.length);
 }
 
-async function getStockInfo() {
-  let params: String = "stock_info/aapl";
-  let reqHeaders: Headers = new Headers();
+async function test() {
   let request: RequestInit = {
-    method: "GET",
-    headers: reqHeaders
-  }
-  const fetchres = await fetch("http://127.0.0.1:5000/api/stock_info/aapl", request);
-  const res = await fetchres.json();
-  console.log(res);
+      method: "GET"
+    }
+  let url = "http://127.0.0.1:5000/api/algos/" + stockTicker.toLocaleLowerCase();
+  let fetchResponce = await fetch(url, request);
+  let responce = await fetchResponce.json();
+  console.log(responce)
 }
-
-
 </script>
 
 <div id="main-container">
@@ -187,7 +230,7 @@ async function getStockInfo() {
         <h3>Shares Owned: {stockOwned}</h3>
         <h3>Out of Price Range: No</h3>
         <button on:click={() => {sell(stockName)}}>Sell Shares</button>
-        <button on:click={getStockInfo}>TEST GET</button>
+        <button on:click={test}>Test</button>
       </div>
     </dialog>
     <br />
@@ -261,5 +304,9 @@ async function getStockInfo() {
   #dialogRight{
     grid-column: 3 / 4;
     grid-row: 3 / 4;
+  }
+
+  #stockCanvas {
+    margin-bottom: .5em;
   }
 </style>
