@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+import datetime
 from . import db
 from dataclasses import dataclass
 
@@ -14,13 +15,20 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(1000))
     # balance = db.Column(db.Integer, )
 
-
+@dataclass
 class Portfolio(db.Model):
+    portfolioId: int
+    user_id: int
+    portfolioName: str
+    creationDate: datetime.datetime
+    balance: int
+    description: str
     portfolioId = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     portfolioName = db.Column(db.String(100))
     creationDate = db.Column(db.DateTime)
     balance = db.Column(db.Integer)
+    description = db.Column(db.Text)
 
 class InvestmentTransacted(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -4,9 +4,67 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from .helper import token_required, generateJWT
 from flask import Blueprint,  jsonify
-from .models import User
-
+from .models import User, Portfolio, InvestmentTransacted
+from datetime import datetime
 api = Blueprint('api', __name__)
+
+@api.route('/api/portfolio/new', methods=["POST"])
+@token_required
+def newPortfolio(current_account):
+    data = request.form
+    portfolio = Portfolio(
+        user_id = current_account.id,
+        portfolioName = data['portfolioName'],
+        creationDate = datetime.now(),
+        balance = data['balance'],
+        description= data['description']
+    )
+    db.session.add(portfolio)
+    db.session.commit()
+    return jsonify()
+
+
+
+@api.route('/api/portfolios', methods=["GET"])
+def getPortfolios():
+    portfolios = Portfolio.query.all()
+    return make_response(jsonify({'portfolios': portfolios}), 201)
+
+@api.route('/api/portfolio/change', methods=["DELETE", "POST" ])
+@token_required
+def changePortfolio(current_account):
+    data = request.form
+    if request.method == 'POST':
+        try:
+            portfolio = Portfolio.query\
+                .filter_by(portfolioId=data['portfolioId'])\
+                                .first()
+
+            # user_id = current_account.id,
+            portfolio.portfolioName = data.get('portfolioName', portfolio.portfolioName) ,
+            portfolio.balance = data.get('balance', portfolio.balance) ,
+            portfolio.description = data.get('description', portfolio.description) 
+            db.session.add(portfolio)
+            db.session.commit()
+            return jsonify(  'Portfolio updated',
+                200,
+                {f"Portfolio {data['portfolioId']}": f"updated"})
+        except:
+            return jsonify(  'Portfolio failed to updated',
+                200,
+                {f"Portfolio {data['portfolioId']}": f"Failed to updated"})
+        
+    elif request.method == 'DELETE':
+        try:
+            portfolio = Portfolio.query.filter_by(portfolioId=data['portfolioId']).delete()
+            db.session.commit()
+            return jsonify( 'Portfolio deleted',
+                200,
+                {f"Portfolio {data['portfolioId']}": f"deleted"})
+        except:
+            return jsonify( 'Portfolio failed to delete',
+                200,
+                {f"Portfolio {data['portfolioId']}": f"Failed to Delete"})            
 
 
 @api.route('/api/')
@@ -33,19 +91,9 @@ def login():
     # json_str = request.data.decode('utf-8')
     auth = request.form
 
-    # debug
-    # auth = {
-    #     'email': a@a.com
-    #     'password': 123
-    # }
-
-    # auth = {
-    #     'email': json_str.split('\n')[3].strip(),
-    #     'password': json_str.split('\n')[7].strip()
-    # }
     if not auth:
         # returns 
-        return make_response(jsonify(
+        return (jsonify(
             'Could not verify',
             401,
             {'WWW-Authenticate': 'Basic realm ="Form required !!"'}
@@ -128,20 +176,4 @@ def stock_info(ticker="MSFT"):
     return make_response(jsonify(data.info, 200))
 
 
-@api.route('/api/users', methods=['GET'])
-def users():
-    
-    users = User.query.all()
-    if not users:
-        # returns 401 if user does not exist
-        return make_response(jsonify(
-            'Could not retrieve users',
-            401,
-            {'WWW-Authenticate': 'Could not retrieve users'}
-        ))
-
-    return make_response(
-        jsonify(users,
-        201
-    ))
 
