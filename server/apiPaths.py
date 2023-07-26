@@ -5,7 +5,8 @@ from . import db
 from .helper import token_required, generateJWT
 from flask import Blueprint,  jsonify
 from .models import User
-import regression
+from .regression import getReggressionLine
+from .mean import getRange
 
 api = Blueprint('api', __name__)
 
@@ -134,5 +135,6 @@ def algos(ticker="MSFT"):
     for i in range(0, 15):
         responce = yf.Ticker(ticker)
         data.append(responce.info["ask"])
-    line = regression.getReggressionLine(data)
-    return make_response(jsonify({'regline': line}), 200)
+    line = getReggressionLine(data)
+    r = getRange(ticker)
+    return make_response(jsonify({'regline': line,'range': r}), 200)

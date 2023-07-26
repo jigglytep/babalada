@@ -163,7 +163,8 @@ async function test() {
   let request: RequestInit = {
       method: "GET"
     }
-  let fetchResponce = await fetch("http://127.0.0.1:5000/api/algos/aapl", request);
+  let url = "http://127.0.0.1:5000/api/algos/" + stockTicker.toLocaleLowerCase();
+  let fetchResponce = await fetch(url, request);
   let responce = await fetchResponce.json();
   console.log(responce)
 }
