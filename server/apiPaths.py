@@ -5,6 +5,7 @@ from . import db
 from .helper import token_required, generateJWT
 from flask import Blueprint,  jsonify
 from .models import User
+import regression
 
 api = Blueprint('api', __name__)
 
@@ -126,3 +127,12 @@ def signup():
 def stock_info(ticker="MSFT"):
     data = yf.Ticker(ticker)
     return make_response(jsonify(data.info, 200))
+
+@api.route('/api/algos/<ticker>', methods=['GET'])
+def algos(ticker="MSFT"):
+    data = []
+    for i in range(0, 15):
+        responce = yf.Ticker(ticker)
+        data.append(responce.info["ask"])
+    line = regression.getReggressionLine(data)
+    return make_response(jsonify({'regline': line}), 200)

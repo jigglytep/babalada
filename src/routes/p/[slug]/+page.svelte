@@ -47,6 +47,14 @@
     }
   }
 
+  function updateMetrics() {
+    let date = new Date();
+    let label = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
+    chartLabels.push(label);
+    chartData.push(funds);
+    linechart.update();
+  }
+
   async function getStockChartInfo(ticker: String) {
     let request: RequestInit = {
       method: "GET"
@@ -57,17 +65,12 @@
         let fetchResponce = await fetch(url, request);
         let responce = await fetchResponce.json();
         stockChartData.push(responce[0]["ask"]);
-        stockLineChart.update();
-      }, 3000);
+        let date = new Date();
+        let label = `${date.getHours()}:${date.getMinutes()}:${date.getMilliseconds()}`;
+        stockChartLabels.push(label);
+        stockLineChart.update();  
+      }, 3000)
     }
-  }
-
-  function updateMetrics() {
-    let date = new Date();
-    let label = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
-    chartLabels.push(label);
-    chartData.push(funds);
-    linechart.update()
   }
 
   function createGraph() {    
@@ -81,28 +84,28 @@
           data: chartData
         }]
       }
-    });
+    })
   }
   
+  function createStockGraph() {
+    stockCtx = stockChartCanvas.getContext('2d');
+    stockLineChart = new Chart(stockCtx, {
+      type: "line",
+      data: {
+        labels: stockChartLabels,
+        datasets: [{
+          label: "Price (labels are time)",
+          data: stockChartData
+        }]
+      }
+    })
+  }
+
 onMount(() => {
   createGraph();
   getCurrentPriceForOwnedStocks();
   updateMetrics();
 });
-
-function createStockGraph() {
-  stockCtx = stockChartCanvas.getContext('2d');
-  stockLineChart = new Chart(stockCtx, {
-    type: "line",
-    data: {
-      labels: stockChartLabels,
-      datasets: [{
-        label: "Price",
-        data: stockChartData
-      }]
-    }
-  })
-};
 
 function sell(name: String) {
   let s = stocks.find(s => s.name == name);
@@ -153,8 +156,17 @@ function closeInspect() {
   stockModal.close();
   stockLineChart.destroy();
   stockChartData.splice(0, stockChartData.length);
+  stockChartLabels.splice(0, stockChartLabels.length);
 }
 
+async function test() {
+  let request: RequestInit = {
+      method: "GET"
+    }
+  let fetchResponce = await fetch("http://127.0.0.1:5000/api/algos/aapl", request);
+  let responce = await fetchResponce.json();
+  console.log(responce)
+}
 </script>
 
 <div id="main-container">
@@ -217,6 +229,7 @@ function closeInspect() {
         <h3>Shares Owned: {stockOwned}</h3>
         <h3>Out of Price Range: No</h3>
         <button on:click={() => {sell(stockName)}}>Sell Shares</button>
+        <button on:click={test}>Test</button>
       </div>
     </dialog>
     <br />
@@ -290,5 +303,9 @@ function closeInspect() {
   #dialogRight{
     grid-column: 3 / 4;
     grid-row: 3 / 4;
+  }
+
+  #stockCanvas {
+    margin-bottom: .5em;
   }
 </style>
