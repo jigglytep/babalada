@@ -32,7 +32,7 @@ class Portfolio(db.Model):
 
 class InvestmentTransacted(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.portfolioId'))
     stock_purchase = db.Column(db.String(5))
     purchase_date = db.Column(db.DateTime)
     purchase_price = db.Column(db.Integer)

@@ -23,6 +23,28 @@ def newPortfolio(current_account):
     db.session.commit()
     return jsonify()
 
+@api.route('/api/stock/transaction', methods=["POST"])
+@token_required
+def stockTransaction(current_account):
+    data = request.form
+
+    transaction = InvestmentTransacted(
+        id = data['id'],
+        portfolio_id = data['portfolio_id'],
+        stock_purchase = data['stock_purchase'],
+        purchase_date = data['purchase_date'],
+        purchase_price = data['purchase_price'],
+        sale_date = data['sale_date'],
+        sale_price = data['sale_price']
+    )
+    db.session.add(transaction)
+    db.session.commit()
+    return jsonify()
+
+@api.route('/api/<portfolioID>/transactions', methods=["GET"])
+def getPortfoliotransactions(portfolioID):
+    portfolios = InvestmentTransacted.query(portfolio_id=portfolioID).all()
+    return make_response(jsonify({'portfolios': portfolios}), 201)
 
 
 @api.route('/api/portfolios', methods=["GET"])
