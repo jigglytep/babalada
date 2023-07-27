@@ -6,7 +6,7 @@ from .helper import token_required, generateJWT
 from flask import Blueprint,  jsonify
 
 from .models import User, Portfolio, InvestmentTransacted
-from datetime import datetime
+from datetime import datetime, timedelta
 from .regression import getReggressionLine
 from .mean import getRange
 
@@ -52,6 +52,12 @@ def stockTransaction(current_account):
 def getPortfoliotransactions(portfolioID):
     portfolios = InvestmentTransacted.query(portfolio_id=portfolioID).all()
     return make_response(jsonify({'portfolios': portfolios}), 201)
+
+
+@api.route('/api/user/<queryId>', methods=["GET"])
+def getUser(queryId):
+    user = User.query(id=queryId).first()
+    return make_response(jsonify({'user': user}), 201)
 
 
 @api.route('/api/portfolios', methods=["GET"])
@@ -208,12 +214,17 @@ def stock_info(ticker="MSFT"):
     data = yf.Ticker(ticker)
     return make_response(jsonify(data.info, 200))
 
+
 @api.route('/api/algos/<ticker>', methods=['GET'])
 def algos(ticker="MSFT"):
     data = []
+    end = datetime.now()
+    start = end - timedelta(days=1)
+    end = end.strftime('%Y-%m-%d')
+    start = start.strftime('%Y-%m-%d')
     for i in range(0, 15):
         responce = yf.Ticker(ticker)
         data.append(responce.info["ask"])
     line = getReggressionLine(data)
     r = getRange(ticker)
-    return make_response(jsonify({'regline': line,'range': r}), 200)
+    return make_response(jsonify({'regline': line, 'range': r}), 200)
