@@ -1,4 +1,9 @@
+from flask import Flask
+from flask_alembic import Alembic
 from flask_cors import CORS
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 import os
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -18,7 +23,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{os.environ["PG_USR"]}:{os.environ["PG_PASSWD"]}@{os.environ["PG_URL"]}/postgres'
 
     db.init_app(app)
-
+    alembic = Alembic()
+    alembic.init_app(app)
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
