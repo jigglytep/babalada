@@ -4,8 +4,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from .helper import token_required, generateJWT
 from flask import Blueprint,  jsonify
+
 from .models import User, Portfolio, InvestmentTransacted
 from datetime import datetime
+from .regression import getReggressionLine
+from .mean import getRange
+
 api = Blueprint('api', __name__)
 
 
@@ -203,3 +207,13 @@ def signup():
 def stock_info(ticker="MSFT"):
     data = yf.Ticker(ticker)
     return make_response(jsonify(data.info, 200))
+
+@api.route('/api/algos/<ticker>', methods=['GET'])
+def algos(ticker="MSFT"):
+    data = []
+    for i in range(0, 15):
+        responce = yf.Ticker(ticker)
+        data.append(responce.info["ask"])
+    line = getReggressionLine(data)
+    r = getRange(ticker)
+    return make_response(jsonify({'regline': line,'range': r}), 200)
