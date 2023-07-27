@@ -8,20 +8,22 @@ from .models import User, Portfolio, InvestmentTransacted
 from datetime import datetime
 api = Blueprint('api', __name__)
 
+
 @api.route('/api/portfolio/new', methods=["POST"])
 @token_required
 def newPortfolio(current_account):
     data = request.form
     portfolio = Portfolio(
-        user_id = current_account.id,
-        portfolioName = data['portfolioName'],
-        creationDate = datetime.now(),
-        balance = data['balance'],
-        description= data['description']
+        user_id=current_account.id,
+        portfolioName=data['portfolioName'],
+        creationDate=datetime.now(),
+        balance=data['balance'],
+        description=data['description']
     )
     db.session.add(portfolio)
     db.session.commit()
     return jsonify()
+
 
 @api.route('/api/stock/transaction', methods=["POST"])
 @token_required
@@ -29,17 +31,18 @@ def stockTransaction(current_account):
     data = request.form
 
     transaction = InvestmentTransacted(
-        id = data['id'],
-        portfolio_id = data['portfolio_id'],
-        stock_purchase = data['stock_purchase'],
-        purchase_date = data['purchase_date'],
-        purchase_price = data['purchase_price'],
-        sale_date = data['sale_date'],
-        sale_price = data['sale_price']
+        id=data['id'],
+        portfolio_id=data['portfolio_id'],
+        stock_purchase=data['stock_purchase'],
+        purchase_date=data['purchase_date'],
+        purchase_price=data['purchase_price'],
+        sale_date=data['sale_date'],
+        sale_price=data['sale_price']
     )
     db.session.add(transaction)
     db.session.commit()
     return jsonify()
+
 
 @api.route('/api/<portfolioID>/transactions', methods=["GET"])
 def getPortfoliotransactions(portfolioID):
@@ -52,7 +55,8 @@ def getPortfolios():
     portfolios = Portfolio.query.all()
     return make_response(jsonify({'portfolios': portfolios}), 201)
 
-@api.route('/api/portfolio/change', methods=["DELETE", "POST" ])
+
+@api.route('/api/portfolio/change', methods=["DELETE", "POST"])
 @token_required
 def changePortfolio(current_account):
     data = request.form
@@ -60,33 +64,36 @@ def changePortfolio(current_account):
         try:
             portfolio = Portfolio.query\
                 .filter_by(portfolioId=data['portfolioId'])\
-                                .first()
+                .first()
 
             # user_id = current_account.id,
-            portfolio.portfolioName = data.get('portfolioName', portfolio.portfolioName) ,
-            portfolio.balance = data.get('balance', portfolio.balance) ,
-            portfolio.description = data.get('description', portfolio.description) 
+            portfolio.portfolioName = data.get(
+                'portfolioName', portfolio.portfolioName),
+            portfolio.balance = data.get('balance', portfolio.balance),
+            portfolio.description = data.get(
+                'description', portfolio.description)
             db.session.add(portfolio)
             db.session.commit()
-            return jsonify(  'Portfolio updated',
-                200,
-                {f"Portfolio {data['portfolioId']}": f"updated"})
+            return jsonify('Portfolio updated',
+                           200,
+                           {f"Portfolio {data['portfolioId']}": f"updated"})
         except:
-            return jsonify(  'Portfolio failed to updated',
-                200,
-                {f"Portfolio {data['portfolioId']}": f"Failed to updated"})
-        
+            return jsonify('Portfolio failed to updated',
+                           200,
+                           {f"Portfolio {data['portfolioId']}": f"Failed to updated"})
+
     elif request.method == 'DELETE':
         try:
-            portfolio = Portfolio.query.filter_by(portfolioId=data['portfolioId']).delete()
+            portfolio = Portfolio.query.filter_by(
+                portfolioId=data['portfolioId']).delete()
             db.session.commit()
-            return jsonify( 'Portfolio deleted',
-                200,
-                {f"Portfolio {data['portfolioId']}": f"deleted"})
+            return jsonify('Portfolio deleted',
+                           200,
+                           {f"Portfolio {data['portfolioId']}": f"deleted"})
         except:
-            return jsonify( 'Portfolio failed to delete',
-                200,
-                {f"Portfolio {data['portfolioId']}": f"Failed to Delete"})            
+            return jsonify('Portfolio failed to delete',
+                           200,
+                           {f"Portfolio {data['portfolioId']}": f"Failed to Delete"})
 
 
 @api.route('/api/')
@@ -114,7 +121,7 @@ def login():
     auth = request.form
 
     if not auth:
-        # returns 
+        # returns
         return (jsonify(
             'Could not verify',
             401,
@@ -196,6 +203,3 @@ def signup():
 def stock_info(ticker="MSFT"):
     data = yf.Ticker(ticker)
     return make_response(jsonify(data.info, 200))
-
-
-

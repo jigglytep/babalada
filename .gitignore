@@ -176,3 +176,4 @@ vite.config.ts.timestamp-*
 !src/lib
 id_rsa_do
 id_rsa_do.pub
+venv/
