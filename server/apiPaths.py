@@ -56,7 +56,7 @@ def getPortfoliotransactions(portfolioID):
 
 @api.route('/api/user/<queryId>', methods=["GET"])
 def getUser(queryId):
-    user = User.query(id=queryId).first()
+    user = User.query.filter_by(id=queryId).first()
     return make_response(jsonify({'user': user}), 201)
 
 
