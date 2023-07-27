@@ -57,13 +57,16 @@ def getPortfoliotransactions(portfolioID):
 @api.route('/api/user/<queryId>', methods=["GET"])
 def getUser(queryId):
     user = User.query.filter_by(id=queryId).first()
-    return make_response(jsonify({'user': user}), 201)
+    json = jsonify({'user': user})
+    return make_response(json, 201)
 
 
 @api.route('/api/portfolios', methods=["GET"])
 def getPortfolios():
     portfolios = Portfolio.query.all()
-    return make_response(jsonify({'portfolios': portfolios}), 201)
+    json = jsonify({'portfolios': portfolios})
+
+    return make_response(json, 201)
 
 
 @api.route('/api/portfolio/change', methods=["DELETE", "POST"])
