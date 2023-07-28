@@ -10,6 +10,7 @@ from .models import User, Portfolio, InvestmentTransacted
 from datetime import datetime, timedelta
 from .regression import getReggressionLine
 from .mean import getRange
+from .kaufmans import getKamas
 
 
 api = Blueprint('api', __name__)
@@ -227,9 +228,13 @@ def stock_info(ticker="MSFT"):
 @api.route('/api/algos/<ticker>', methods=['GET'])
 def algos(ticker="MSFT"):
     data = []
-    for i in range(0, 15):
-        responce = yf.Ticker(ticker)
-        data.append(responce.info["ask"])
+    responce = yf.Ticker(ticker)
+    data = responce.history(period='5d')['Close'].to_list()
     line = getReggressionLine(data)
-    r = getRange(ticker)
-    return make_response(jsonify({'regline': line, 'range': r}), 200)
+    r = {
+        "high": max(data),
+        "low": min(data)
+    }
+    kamas = getKamas(data)
+    return make_response(jsonify({'regline': line, 'range': r, 'kaufmans': kamas}), 200)
+
