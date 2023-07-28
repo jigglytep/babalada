@@ -227,10 +227,9 @@ def stock_info(ticker="MSFT"):
 
 @api.route('/api/algos/<ticker>', methods=['GET'])
 def algos(ticker="MSFT"):
-    data = []
     df = openbb.stocks.load(ticker, interval=1)
     df = df.tail(10)
-    data = df.tail(10)['Open'].values.tolist()
+    data = df.tail(10)['Close'].values.tolist()
     line = getReggressionLine(data)
     r = getRange(ticker)
     return make_response(jsonify({'regline': line, 'range': r}), 200)
