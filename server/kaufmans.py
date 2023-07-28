@@ -16,20 +16,33 @@
 #   https://school.stockcharts.com/doku.php?id=technical_indicators:kaufman_s_adaptive_moving_average
 #   https://www.youtube.com/watch?v=n_K643pELY8
 
-def getEr(closes):
-    change = abs(closes[9] - closes[0])
+def getVollatility(closes):
     closesSum = 0
     for i in range(1, len(closes)):
         if i == 0:
             closesSum += abs(closes[0] - 0)
         else:
             closesSum += abs(closes[i] - closes[i -1])
-    return change / closesSum
+    return closesSum
+    
+def getEr(start, end, vollatility):
+    change = abs(end - start)
+    return change / vollatility
 
-def getSC(closes):
-    sc = getEr(closes) * ((2/(2 + 1))  - (2/(30 + 1))) + (2/(30 + 1))
+def getSC(closes, vollatility):
+    sc = getEr(closes[0], closes[-1], vollatility) * ((2/(2 + 1))  - (2/(30 + 1))) + (2/(30 + 1))
     return (sc * sc)
 
-def getCurrentKama(closes, piror, price):
-    kama = piror + getSC(closes) * (price - piror)
+def getCurrentKama(closes, piror, price, v):
+    kama = piror + getSC(closes, v) * (price - piror)
     return kama
+
+def getKamas(closes):
+    price = closes[-1]
+    v = getVollatility(closes)
+    kamas = []
+    piror = getCurrentKama(closes, 0, price, v)
+    for i in range(1, len(closes)):
+        kamas.append(piror)
+        piror = getCurrentKama(closes, piror, price, v)
+    return {'k': kamas}
