@@ -136,5 +136,8 @@ def algos(ticker="MSFT"):
         responce = yf.Ticker(ticker)
         data.append(responce.info["ask"])
     line = getReggressionLine(data)
-    r = getRange(ticker)
+    r = {
+        'high': max(data),
+        'low': min(data)
+    }
     return make_response(jsonify({'regline': line,'range': r}), 200)

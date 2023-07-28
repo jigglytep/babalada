@@ -188,7 +188,7 @@ async function inputAlgos(){
     }
   let url = "http://127.0.0.1:5000/api/algos/" + stockTicker.toLocaleLowerCase();
   let fetchResponce = await fetch(url, request);
-  let responce = await fetchResponce.json();
+  let responce = await fetchResponce.json().then((responce) => {
   regLineSlope = responce["regline"]["slope"];
   regLineIntercept = responce["regline"]["b"];
   for(let i = 0; i < stockChartData.length; i++) {
@@ -200,6 +200,7 @@ async function inputAlgos(){
   console.table(stockChartRegLinePoints);
   stockHigh = responce["range"]["high"];
   stockLow = responce["range"]["high"];
+});
 }
 
 function refresh(stockName:String) {
