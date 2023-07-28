@@ -10,6 +10,7 @@ from .models import User, Portfolio, InvestmentTransacted
 from datetime import datetime, timedelta
 from .regression import getReggressionLine
 from .mean import getRange
+from .kaufmans import getKamas
 
 
 api = Blueprint('api', __name__)
