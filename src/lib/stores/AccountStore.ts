@@ -14,7 +14,7 @@ class AccountStore {
 			}
 			getAccountByToken(newAccessToken).then((responseJSON) => {
 				if (!responseJSON.id || !responseJSON.name) {
-					console.error('invalid account properties, cancelling login')
+					console.error('invalid account properties, cancelling login:', responseJSON)
 					accessToken.set(null);
 					_account.set(null);
 					return;
