@@ -231,5 +231,8 @@ def algos(ticker="MSFT"):
     df = df.tail(10)
     data = df.tail(10)['Close'].values.tolist()
     line = getReggressionLine(data)
-    r = getRange(ticker)
+    r = {
+        "high": max(data),
+        "low": min(data)
+    }
     return make_response(jsonify({'regline': line, 'range': r}), 200)
