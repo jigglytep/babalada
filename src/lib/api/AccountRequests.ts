@@ -1,5 +1,6 @@
 import { accountStore } from "$stores/AccountStore";
 import type { Account } from "$types/Account";
+import { redirect } from "@sveltejs/kit";
 
 export const login = async (formData: FormData) => {
 	const request: RequestInit = {
@@ -10,7 +11,7 @@ export const login = async (formData: FormData) => {
 	const response = await fetch('/api/login', request);
 	const responseJSON = await response.json();
 	if (responseJSON.token) {
-		accountStore.jwt.set(responseJSON.token);
+		accountStore.accessToken.set(responseJSON.token)
 	}
 	return responseJSON;
 }
@@ -25,16 +26,19 @@ export const logout = async () => {
 	return responseJSON;
 }
 
-export const getAccountData = async (jwt: string | undefined) => {
-	// TODO: request by id instead of by jwt
+export const getAccountByToken = async (accessToken: string) => {
 	const request: RequestInit = {
-		headers: (jwt === undefined) ? undefined : new Headers({'x-access-token': jwt}),
 		method: 'GET',
-		redirect: 'follow',
-	};
-	const response = await fetch('/api/account', request);
+		headers: new Headers({
+			'x-access-token': accessToken,
+		}),
+		redirect: 'follow'
+	}
+	const response = await fetch('/api/account', request)
 	const responseJSON = await response.json();
-	// TODO: return Account datatype
-	console.log(responseJSON);
 	return responseJSON;
+}
+
+export const getAccountById = async () => {
+	
 }
