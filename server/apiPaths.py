@@ -9,6 +9,7 @@ from flask import Blueprint,  jsonify
 from .models import User, Portfolio, InvestmentTransacted
 from datetime import datetime, timedelta
 from .regression import getReggressionLine
+from .mean import getRange
 
 
 api = Blueprint('api', __name__)
@@ -236,3 +237,12 @@ def stock_info(ticker="MSFT"):
 #         "low": min(data)
 #     }
 #     return make_response(jsonify({'regline': line, 'range': r}), 200)
+@api.route('/api/algos/<ticker>', methods=['GET'])
+def algos(ticker="MSFT"):
+    data = []
+    for i in range(0, 15):
+        responce = yf.Ticker(ticker)
+        data.append(responce.info["ask"])
+    line = getReggressionLine(data)
+    r = getRange(ticker)
+    return make_response(jsonify({'regline': line, 'range': r}), 200)

@@ -7,13 +7,4 @@ flask-cors
 pyjwt
 python-dotenv
 yfinance
-openbb
 
-
-# 1 endpoint with list of users
-# 2 EP with user's profile
-# 3 EP where user can edit their own account
-
-# Portfolios
-# 3 sell and buy stock functionality
-# 4 cash balance

@@ -2,7 +2,7 @@
 # SOURCE: https://github.com/BretFisher/nodejs-rocks-in-docker
 FROM node:20.2.0-bullseye-slim AS node
 FROM ubuntu:focal-20230412 AS base
-RUN apt-get update && apt-get install -y python3-pip rustc
+RUN apt-get update && apt-get install -y python3-pip
 # COPY . /app
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
@@ -23,16 +23,9 @@ USER node
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | sh -
 # install app dependencies
-# COPY pnpm-lock.yaml package.json ./
-# RUN pnpm install --prod
-# RUN echo 'rustc --version'
-
-RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
-ENV PATH="$PATH:$HOME/.cargo/env"
-RUN echo 'source $HOME/.cargo/env' >> $HOME/.bashrc
+COPY pnpm-lock.yaml package.json ./
+RUN pnpm install --prod
 COPY requirements.txt ./
-RUN pip3 install --upgrade pip
-RUN pip3 install -U pip setuptools
 RUN pip3 install -r /app/requirements.txt
 # copy app files
 COPY build build
