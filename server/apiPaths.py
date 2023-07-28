@@ -1,4 +1,4 @@
-from openbb_terminal.sdk import openbb
+# from openbb_terminal.sdk import openbb
 import yfinance as yf
 from flask import request, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,7 +9,7 @@ from flask import Blueprint,  jsonify
 from .models import User, Portfolio, InvestmentTransacted
 from datetime import datetime, timedelta
 from .regression import getReggressionLine
-from .mean import getRange
+
 
 api = Blueprint('api', __name__)
 
@@ -225,14 +225,14 @@ def stock_info(ticker="MSFT"):
     return make_response(jsonify(data.info, 200))
 
 
-@api.route('/api/algos/<ticker>', methods=['GET'])
-def algos(ticker="MSFT"):
-    df = openbb.stocks.load(ticker, interval=1)
-    df = df.tail(10)
-    data = df.tail(10)['Close'].values.tolist()
-    line = getReggressionLine(data)
-    r = {
-        "high": max(data),
-        "low": min(data)
-    }
-    return make_response(jsonify({'regline': line, 'range': r}), 200)
+# @api.route('/api/algos/<ticker>', methods=['GET'])
+# def algos(ticker="MSFT"):
+#     df = openbb.stocks.load(ticker, interval=1)
+#     df = df.tail(10)
+#     data = df.tail(10)['Close'].values.tolist()
+#     line = getReggressionLine(data)
+#     r = {
+#         "high": max(data),
+#         "low": min(data)
+#     }
+#     return make_response(jsonify({'regline': line, 'range': r}), 200)
