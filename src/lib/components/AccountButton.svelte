@@ -1,14 +1,27 @@
 <script lang="ts">
 	import Modal from '$components/Modal.svelte';
 	import LoginForm from '$components/LoginForm.svelte';
+  import { accountStore } from '$stores/AccountStore';
+  import userIcon from '$pictures/userIcon.png'
+	const { account } = accountStore;
 	let doShowModal = false;
+	accountStore.account.subscribe(newAccount => {
+		if (newAccount !== null) {
+			console.log(newAccount);
+			doShowModal = false;
+		}
+	});
 </script>
 
-<!--TODO: if signed in, show account button instead-->
-<button on:click={() => doShowModal=true}>
-	Login
-</button>
-
+{#if $account === null}
+	<button on:click={() => doShowModal=true}>
+		Login
+	</button>
+{:else}
+	<button class="no-decorate" on:click={() => {}}>
+		<img src={userIcon} alt="Profile Picture">
+	</button>
+{/if}
 <Modal bind:doShowModal>
 	<LoginForm />
 </Modal>
@@ -27,6 +40,14 @@
 		}
 		&:active {
 			background-color: gray;
+		}
+	}
+	button.no-decorate {
+		padding: 0;
+		border: 0 hidden;
+		img	{
+			display: block;
+			height: calc(1rem + 24px);
 		}
 	}
 </style>

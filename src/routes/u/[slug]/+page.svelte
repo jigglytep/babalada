@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
 	export let data: PageData;
   import PortfolioThumbnail from "$components/PortfolioThumbnail.svelte";
-  import userIcon from '../../../lib/pictures/userIcon.png'
+  import userIcon from '$pictures/userIcon.png'
 
   let bio = "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.";
   let currentYear: number = new Date().getFullYear();
