@@ -18,9 +18,7 @@
 		Login
 	</button>
 {:else}
-	<button class="no-decorate" on:click={() => {}}>
-		<img src={userIcon} alt="Profile Picture">
-	</button>
+	<a href='/u/{$account.id}'><img src={userIcon} alt="Profile Picture"></a>
 {/if}
 <Modal bind:doShowModal>
 	<LoginForm />
@@ -42,12 +40,16 @@
 			background-color: gray;
 		}
 	}
-	button.no-decorate {
-		padding: 0;
-		border: 0 hidden;
+	a {
 		img	{
 			display: block;
 			height: calc(1rem + 24px);
+		}
+		&:hover {
+			background-color: lightgray;
+		}
+		&:active {
+			background-color: gray;
 		}
 	}
 </style>
