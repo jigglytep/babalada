@@ -1,3 +1,4 @@
+from openbb_terminal.sdk import openbb
 import yfinance as yf
 from flask import request, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -226,14 +227,12 @@ def stock_info(ticker="MSFT"):
 
 @api.route('/api/algos/<ticker>', methods=['GET'])
 def algos(ticker="MSFT"):
-    data = []
-    end = datetime.now()
-    start = end - timedelta(days=1)
-    end = end.strftime('%Y-%m-%d')
-    start = start.strftime('%Y-%m-%d')
-    for i in range(0, 15):
-        responce = yf.Ticker(ticker)
-        data.append(responce.info["ask"])
+    df = openbb.stocks.load(ticker, interval=1)
+    df = df.tail(10)
+    data = df.tail(10)['Close'].values.tolist()
     line = getReggressionLine(data)
-    r = getRange(ticker)
+    r = {
+        "high": max(data),
+        "low": min(data)
+    }
     return make_response(jsonify({'regline': line, 'range': r}), 200)
