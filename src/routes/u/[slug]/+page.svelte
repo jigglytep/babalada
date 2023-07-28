@@ -3,6 +3,10 @@
 	export let data: PageData;
   import PortfolioThumbnail from "$components/PortfolioThumbnail.svelte";
   import userIcon from '$pictures/userIcon.png'
+  import { accountStore } from "$stores/AccountStore";
+	const { account } = accountStore;
+	// TODO: if $account.id equals data.slug, show full user profile
+	// TODO: otherwise, show user profile from data from endpoint /api/user/{data.slug}
 
   let bio = "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.";
   let currentYear: number = new Date().getFullYear();
@@ -10,7 +14,7 @@
     {ticker: "FSC", name:"FakeStock.com", price: "$1.00", quanity: "1"},
     {ticker: "S12", name: "Stock123.com", price: "$2.50", quanity: "3"}
   ]
-  let ports = [
+  let portfolios = [
     {name: "Main", created: "7/6/2023", funds: 1345},
     {name: "Backup", created: "7/6/2023", funds: 1245},
     {name: "Startegy 3", created: "7/1/2023", funds: 1320.85},
@@ -42,10 +46,10 @@
   </aside>
   <main id="mainUserInfo">
     <h2>Active Portfolios</h2>
-    {#if ports.length == 0}
+    {#if portfolios.length == 0}
     <p>{data.slug} has no created portfolios</p>
     {:else}
-      {#each ports as p, i}
+      {#each portfolios as p, i}
       <PortfolioThumbnail number = {i + 1} name = {p.name} created = {p.created} funds = {p.funds} />
       {/each}
   {/if}
