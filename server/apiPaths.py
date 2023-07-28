@@ -129,15 +129,12 @@ def index():
 @api.route('/api/account/')
 @token_required
 def api_account(current_account):
-
-    # user = User.query.filter_by(id=queryId).first()
     json = jsonify({'user': current_account})
     return make_response(json, 201)
 
 
 @api.route('/api/login', methods=['POST'])
 def login():
-    # json_str = request.data.decode('utf-8')
     auth = request.form
 
     if not auth:
