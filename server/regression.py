@@ -40,12 +40,10 @@ def getReggressionLine(data):
         b = round(getYIntercept(xs, data), 3)
         # the if statment makes sure the correct sign are added to b
         # it also coverts slope and b to strings so it can concatenated
-        if (b > 0):
-            return ("y = " + str(slope) + "x + " + str(b))
-        elif (b == 0):
-            return ("y = " + str(slope) + "x")
-        else:
-            return ("y = " + str(slope) + "x " + str(b))
+        return {
+            'slope': slope,
+            'b': b
+        }
     else:
         # if nothing was returned (possibly becasue user gave
         # a nonexsisting stock name) then data's type is none

@@ -21,8 +21,10 @@
   let ctx:any;
   let linechart: any;
   let stockChartCanvas: any;
-  let stockChartData: Array<Number> = [];
+  let stockChartData: Array<number> = [];
   let stockChartLabels: Array<String> = [];
+  let stockChartRegLinePoints: Array<Number> = [];
+  let stockChartRegLineLabels: Array<String> = [];
   let stockCtx: any;
   let stockLineChart: any;
 
@@ -31,7 +33,11 @@
   let stockModal: any;
   let stockTicker: String;
   let stockPrice: Number;
-  let stockOwned: number;
+  let stockOwned: Number;
+  let regLineSlope: number;
+  let regLineIntercept: number;
+  let stockHigh: Number = 0;
+  let stockLow: Number = 0;
 
   async function getCurrentPriceForOwnedStocks() {
     let request: RequestInit = {
@@ -96,7 +102,11 @@
         datasets: [{
           label: "Price (labels are time)",
           data: stockChartData
-        }]
+        },
+        {
+          label: "Regression Line",
+          data: stockChartRegLinePoints,
+      }]
       }
     })
   }
@@ -148,6 +158,7 @@ function inspect(stock: any) {
   stockPrice = stock.price;
   stockOwned = stock.quanity;
   createStockGraph();
+  inputAlgos();
   getStockChartInfo(stockTicker);
 }
 
@@ -157,6 +168,8 @@ function closeInspect() {
   stockLineChart.destroy();
   stockChartData.splice(0, stockChartData.length);
   stockChartLabels.splice(0, stockChartLabels.length);
+  stockChartRegLinePoints.splice(0, stockChartRegLinePoints.length);
+  stockChartRegLineLabels.splice(0, stockChartRegLineLabels.length);
 }
 
 async function test() {
@@ -167,6 +180,30 @@ async function test() {
   let fetchResponce = await fetch(url, request);
   let responce = await fetchResponce.json();
   console.log(responce)
+}
+
+async function inputAlgos(){
+  let request: RequestInit = {
+      method: "GET"
+    }
+  let url = "http://127.0.0.1:5000/api/algos/" + stockTicker.toLocaleLowerCase();
+  let fetchResponce = await fetch(url, request);
+  let responce = await fetchResponce.json();
+  regLineSlope = responce["regline"]["slope"];
+  regLineIntercept = responce["regline"]["b"];
+  for(let i = 0; i < stockChartData.length; i++) {
+    let point = (stockChartData[i] * regLineSlope) + regLineIntercept;
+    stockChartRegLinePoints.push(point);
+    stockChartRegLineLabels.push("R" + (i + 1));
+    stockLineChart.update();
+  }
+  console.table(stockChartRegLinePoints);
+  stockHigh = responce["range"]["high"];
+  stockLow = responce["range"]["high"];
+}
+
+function refresh(stockName:String) {
+  console.log(stockName)
 }
 </script>
 
@@ -225,10 +262,15 @@ async function test() {
         <h3>Price: ${stockPrice}</h3>
         <h3>Currernt Funds: ${funds}</h3>
         <button on:click={() => {buy(stockName)}}>Buy Shares</button>
+        <button on:click={() => {refresh(stockName)}}>Refresh</button>
       </div>
       <div id="dialogRight">
         <h3>Shares Owned: {stockOwned}</h3>
-        <h3>Out of Price Range: No</h3>
+        {#if stockPrice > stockHigh || stockPrice < stockLow}
+          <h3>Out of Price Range: Yes</h3>
+        {:else} 
+          <h3>Out of Price Range: No</h3>
+        {/if}
         <button on:click={() => {sell(stockName)}}>Sell Shares</button>
         <button on:click={test}>Test</button>
       </div>
