@@ -25,6 +25,8 @@
   let stockChartLabels: Array<String> = [];
   let stockChartRegLinePoints: Array<Number> = [];
   let stockChartRegLineLabels: Array<String> = [];
+  let stockChartKaufmanValues: Array<Number> = [];
+  let stockChartKaufmanLabels: Array<String> = [];
   let stockCtx: any;
   let stockLineChart: any;
 
@@ -48,7 +50,7 @@
       url = "http://127.0.0.1:5000/api/stock_info/" + (stocks[i]["ticker"]).toLowerCase();
       let fetchResponce = await fetch(url, request);
       let responce = await fetchResponce.json();
-      stocks[i]["price"] = responce[0]["ask"];
+      stocks[i]["price"] = responce[0]["open"];
       stocks = stocks;
     }
   }
@@ -70,7 +72,10 @@
       setTimeout(async () => {
         let fetchResponce = await fetch(url, request);
         let responce = await fetchResponce.json();
-        stockChartData.push(responce[0]["ask"]);
+        stockChartData.push(responce[0]["open"]);
+        if (i == 0) {
+          stockPrice = stockChartData[0];
+        }
         let date = new Date();
         let label = `${date.getHours()}:${date.getMinutes()}:${date.getMilliseconds()}`;
         stockChartLabels.push(label);
@@ -106,7 +111,11 @@
         {
           label: "Regression Line",
           data: stockChartRegLinePoints,
-      }]
+        },
+        {
+          label: "Kaufmans Points",
+          data: stockChartKaufmanValues
+        }]
       }
     })
   }
@@ -155,7 +164,6 @@ function inspect(stock: any) {
   stockModal.style.display = "grid";
   stockName = stock.name;
   stockTicker = stock.ticker;
-  stockPrice = stock.price;
   stockOwned = stock.quanity;
   createStockGraph();
   inputAlgos();
@@ -170,16 +178,8 @@ function closeInspect() {
   stockChartLabels.splice(0, stockChartLabels.length);
   stockChartRegLinePoints.splice(0, stockChartRegLinePoints.length);
   stockChartRegLineLabels.splice(0, stockChartRegLineLabels.length);
-}
-
-async function test() {
-  let request: RequestInit = {
-      method: "GET"
-    }
-  let url = "http://127.0.0.1:5000/api/algos/" + stockTicker.toLocaleLowerCase();
-  let fetchResponce = await fetch(url, request);
-  let responce = await fetchResponce.json();
-  console.log(responce)
+  stockChartKaufmanValues.splice(0, stockChartKaufmanValues.length);
+  stockChartKaufmanLabels.splice(0, stockChartKaufmanLabels.length);
 }
 
 async function inputAlgos(){
@@ -189,22 +189,21 @@ async function inputAlgos(){
   let url = "http://127.0.0.1:5000/api/algos/" + stockTicker.toLocaleLowerCase();
   let fetchResponce = await fetch(url, request);
   let responce = await fetchResponce.json().then((responce) => {
-  regLineSlope = responce["regline"]["slope"];
-  regLineIntercept = responce["regline"]["b"];
-  for(let i = 0; i < stockChartData.length; i++) {
-    let point = (stockChartData[i] * regLineSlope) + regLineIntercept;
-    stockChartRegLinePoints.push(point);
-    stockChartRegLineLabels.push("R" + (i + 1));
-    stockLineChart.update();
-  }
-  console.table(stockChartRegLinePoints);
-  stockHigh = responce["range"]["high"];
-  stockLow = responce["range"]["high"];
-});
-}
-
-function refresh(stockName:String) {
-  console.log(stockName)
+    regLineSlope = responce["regline"]["slope"];
+    regLineIntercept = responce["regline"]["b"];
+    stockHigh = responce["range"]["high"].toFixed(2);
+    stockLow = responce["range"]["high"].toFixed(2);
+    for(let i = 0; i < 15; i++) {
+      let point = (i * regLineSlope) + regLineIntercept;
+      stockChartRegLinePoints.push(point);
+      stockChartRegLineLabels.push("R" + (i + 1));
+      stockLineChart.update();
+    }
+    for (let i = 0; i < 5; i++) {
+      stockChartKaufmanValues.push(responce["kaufmans"]["k"][i]);
+      stockChartKaufmanLabels.push("K" + (i + 1));
+    }
+  });
 }
 </script>
 
@@ -260,20 +259,23 @@ function refresh(stockName:String) {
       </div>
       <div id="dialogLeft">
         <h3>Ticker: {stockTicker}</h3>
-        <h3>Price: ${stockPrice}</h3>
+        {#if stockPrice == undefined}
+          <h3>Price: Loading</h3>
+        {:else}
+          <h3>Price: ${stockPrice}</h3>
+        {/if}
         <h3>Currernt Funds: ${funds}</h3>
-        <button on:click={() => {buy(stockName)}}>Buy Shares</button>
-        <button on:click={() => {refresh(stockName)}}>Refresh</button>
-      </div>
+        <button on:click={() => {buy(stockName)}}>Buy Shares</button>      </div>
       <div id="dialogRight">
         <h3>Shares Owned: {stockOwned}</h3>
-        {#if stockPrice > stockHigh || stockPrice < stockLow}
-          <h3>Out of Price Range: Yes</h3>
-        {:else} 
+        {#if stockPrice <= stockHigh && stockPrice >= stockLow}
           <h3>Out of Price Range: No</h3>
+        {:else} 
+          <h3>Out of Price Range: Yes</h3>
         {/if}
+        <h3>Stock High: ${stockHigh}</h3>
+        <h3>Stock Low: ${stockLow}</h3>
         <button on:click={() => {sell(stockName)}}>Sell Shares</button>
-        <button on:click={test}>Test</button>
       </div>
     </dialog>
     <br />
