@@ -108,6 +108,9 @@
 		input[type="submit"] {
 			height: 1.6rem;
 			border: none;
+			&:active {
+				background-color: lightgray;
+			}
 		}
 	}
 </style>

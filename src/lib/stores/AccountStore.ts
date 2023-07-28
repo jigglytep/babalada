@@ -27,7 +27,6 @@ class AccountStore {
 					bio: responseJSON.bio,
 					pfpURL: responseJSON.photoUrl,
 				};
-				console.log(account);
 				_account.set(account);
 			})
 		});
