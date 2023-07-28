@@ -126,11 +126,12 @@ def index():
     return jsonify(home)
 
 
-@api.route('/api/account')
+@api.route('/api/account/')
 @token_required
 def api_account(current_account):
-    user = User.query.filter_by(id=queryId).first()
-    json = jsonify({'user': user})
+
+    # user = User.query.filter_by(id=queryId).first()
+    json = jsonify({'user': current_account})
     return make_response(json, 201)
 
 
