@@ -12,6 +12,7 @@ const config = {
 		alias: {
 			$api: 'src/lib/api',
 			$components: 'src/lib/components',
+			$pictures: 'src/lib/pictures',
 			$stores: 'src/lib/stores',
 			$types: 'src/lib/types',
 			$utils: 'src/lib/utils',

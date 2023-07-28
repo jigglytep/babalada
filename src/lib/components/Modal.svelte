@@ -2,7 +2,12 @@
 	import 'iconify-icon';
 	export let doShowModal: boolean;
 	let dialogHTML: HTMLDialogElement;
-	$: if (dialogHTML && doShowModal) dialogHTML.showModal();
+	$: {
+		if (dialogHTML) {
+			if (doShowModal) dialogHTML.showModal();
+			else dialogHTML.close();
+		}
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
