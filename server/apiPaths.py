@@ -117,19 +117,10 @@ def changePortfolio(current_account):
                            {f"Portfolio {data['portfolioId']}": f"Failed to Delete"})
 
 
-@api.route('/api/')
-def index():
-    home = {
-        "home": "welcome message",
-        "status": "curent  status"
-    }
-    return jsonify(home)
-
-
-@api.route('/api/account/')
+@api.route('/api/account')
 @token_required
 def api_account(current_account):
-    json = jsonify({'user': current_account})
+    json = jsonify(current_account)
     return make_response(json, 201)
 
 
